@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import {
   GoogleAuthProvider,
   User,
@@ -54,13 +53,9 @@ const Auth = ({ className }: AuthProps) => {
       {user === undefined ? (
         <>Loading...</>
       ) : user ? (
-        <Button leftIcon={<FaSignOutAlt />} onClick={onSignOutClick}>
-          Sign out
-        </Button>
+        <div onClick={onSignOutClick}>Sign out</div>
       ) : (
-        <Button leftIcon={<FaGoogle />} onClick={onSignInClick}>
-          Sign in with Google
-        </Button>
+        <div onClick={onSignInClick}>Sign in with Google</div>
       )}
     </Wrapper>
   );

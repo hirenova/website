@@ -1,16 +1,12 @@
 import "config/firebase";
+import "@fontsource/montserrat";
 
 import "../styles/globals.css";
 
-import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;
