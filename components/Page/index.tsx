@@ -1,8 +1,12 @@
+import { NextPage } from "next";
+import Head from "next/head";
 import styled from "styled-components";
 
 import Content from "./Content";
-import Footer from "./Footer";
 import Header from "./Header";
+
+// import Footer from "./Footer";
+
 
 const Wrapper = styled.div`
   margin-top: 100px;
@@ -11,15 +15,25 @@ const Wrapper = styled.div`
 export interface PageProps {
   children: React.ReactNode;
   className?: string;
+  title: string;
 }
 
-const Page = ({ children, className }: PageProps) => {
+const Page: NextPage<PageProps> = ({
+  children,
+  className,
+  title,
+}: PageProps) => {
   return (
-    <Wrapper>
-      <Header />
-      <Content className={className}>{children}</Content>
-      <Footer />
-    </Wrapper>
+    <>
+      <Head>
+        <title>HireNova - {title}</title>
+      </Head>
+      <Wrapper>
+        <Header />
+        <Content className={className}>{children}</Content>
+        {/* <Footer /> */}
+      </Wrapper>
+    </>
   );
 };
 

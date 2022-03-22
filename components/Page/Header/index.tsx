@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import Logo from "./Logo";
+import Menu from "./Menu";
+
 const Wrapper = styled.div`
   position: fixed;
   display: flex;
@@ -16,7 +19,12 @@ const Wrapper = styled.div`
 interface HeaderProps {}
 
 const Header = ({}: HeaderProps) => {
-  return <Wrapper>Header</Wrapper>;
+  return (
+    <Wrapper>
+      <Logo />
+      <Menu />
+    </Wrapper>
+  );
 };
 
 export default Header;
