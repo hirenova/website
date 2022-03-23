@@ -21,7 +21,7 @@ const MenuButton = ({ className }: MenuButtonProps) => {
     setSideBarOpen((sideBarOpen) => !sideBarOpen);
   };
 
-  return <Wrapper className={className} src="/menu.webp" onClick={onClick} />;
+  return <Wrapper className={className} src="menu.webp" onClick={onClick} />;
 };
 
 export default MenuButton;
