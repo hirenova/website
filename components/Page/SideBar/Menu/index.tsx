@@ -3,26 +3,20 @@ import styled from "styled-components";
 import Item from "./Item";
 
 const Wrapper = styled.div`
-  @media (min-width: 1300px) {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-  }
-  @media (max-width: 1300px) {
-    display: none;
-  }
+  display: flex;
+  flex-direction: column;
 `;
 
-interface MenuItemsProps {
+interface MenuProps {
   className?: string;
   navigation: object;
 }
 
-const MenuItems = ({ className, navigation }: MenuItemsProps) => {
+const Menu = ({ className, navigation }: MenuProps) => {
   return (
     <Wrapper className={className}>
       {Object.entries(navigation).map(([id, item]) => (
-        <Item key={item.href} href={item.href}>
+        <Item key={id} href={item.href}>
           {item.label}
         </Item>
       ))}
@@ -30,4 +24,4 @@ const MenuItems = ({ className, navigation }: MenuItemsProps) => {
   );
 };
 
-export default MenuItems;
+export default Menu;

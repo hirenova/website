@@ -1,15 +1,24 @@
+import useClickAway from "hooks/useClickAway";
 import usePage from "hooks/usePage";
-import styled, { css } from "styled-components";
+import { MutableRefObject, RefObject } from "react";
+import styled, { ThemedStyledFunction, css } from "styled-components";
 
-interface StyledSideBarProps {
+import Menu from "./Menu";
+
+interface StyledSideBarProps
+  extends Partial<ThemedStyledFunction<"div", any, {}, never>> {
   className?: string;
+  children: React.ReactNode;
   open: boolean;
 }
 
 const Wrapper = styled.div<StyledSideBarProps>`
   position: fixed;
+  display: flex;
+  flex-direction: column;
   width: 400px;
   height: 100vh;
+  padding-top: calc(75px + 30px);
   z-index: 10;
   background: white;
   box-shadow: 5px 0 15px rgb(64 79 104 / 5%);
@@ -27,13 +36,21 @@ const Wrapper = styled.div<StyledSideBarProps>`
 
 interface SideBarProps {
   className?: string;
+  navigation: object;
 }
 
-const SideBar = ({ className }: SideBarProps) => {
-  const { sideBarOpen } = usePage();
+const SideBar = ({ className, navigation }: SideBarProps) => {
+  const { sideBarOpen, setSideBarOpen } = usePage();
+
+  const onClickAway = () => {
+    setSideBarOpen(false);
+  };
+
+  const { ref } = useClickAway(onClickAway);
+
   return (
-    <Wrapper className={className} open={sideBarOpen}>
-      SideBar
+    <Wrapper ref={ref} className={className} open={sideBarOpen}>
+      <Menu navigation={navigation} />
     </Wrapper>
   );
 };

@@ -17,13 +17,15 @@ const Wrapper = styled.div`
   z-index: 11;
 `;
 
-interface HeaderProps {}
+interface HeaderProps {
+  navigation: object;
+}
 
-const Header = ({}: HeaderProps) => {
+const Header = ({ navigation }: HeaderProps) => {
   return (
     <Wrapper>
       <Logo />
-      <MenuItems />
+      <MenuItems navigation={navigation} />
       <MenuButton />
     </Wrapper>
   );
