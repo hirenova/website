@@ -3,15 +3,21 @@ import styled from "styled-components";
 import Item from "./Item";
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
+  @media (min-width: 1300px) {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  @media (max-width: 1300px) {
+    display: none;
+  }
 `;
 
-interface MenuProps {
+interface MenuItemsProps {
   className?: string;
 }
 
-const Menu = ({ className }: MenuProps) => {
+const MenuItems = ({ className }: MenuItemsProps) => {
   return (
     <Wrapper className={className}>
       <Item href="/">Home</Item>
@@ -25,4 +31,4 @@ const Menu = ({ className }: MenuProps) => {
   );
 };
 
-export default Menu;
+export default MenuItems;

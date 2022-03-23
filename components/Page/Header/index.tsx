@@ -1,19 +1,20 @@
 import styled from "styled-components";
 
 import Logo from "./Logo";
-import Menu from "./Menu";
+import MenuButton from "./MenuButton";
+import MenuItems from "./MenuItems";
 
 const Wrapper = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   top: 0px;
-  height: 100px;
   width: 100vw;
-  padding: 25px 50px;
-  box-shadow: 0 0 25px 0 rgb(0 0 0 / 4%);
+  padding: 15px 30px;
+  gap: 40px;
   background: white;
+  box-shadow: 0 5px 15px rgb(64 79 104 / 5%);
+  z-index: 11;
 `;
 
 interface HeaderProps {}
@@ -22,7 +23,8 @@ const Header = ({}: HeaderProps) => {
   return (
     <Wrapper>
       <Logo />
-      <Menu />
+      <MenuItems />
+      <MenuButton />
     </Wrapper>
   );
 };

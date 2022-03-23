@@ -1,16 +1,15 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import PageProvider from "providers/PageProvider";
 import styled from "styled-components";
 
 import Content from "./Content";
 import Header from "./Header";
+import SideBar from "./SideBar";
 
 // import Footer from "./Footer";
 
-
-const Wrapper = styled.div`
-  margin-top: 100px;
-`;
+const Wrapper = styled(PageProvider)``;
 
 export interface PageProps {
   children: React.ReactNode;
@@ -24,16 +23,15 @@ const Page: NextPage<PageProps> = ({
   title,
 }: PageProps) => {
   return (
-    <>
+    <Wrapper>
       <Head>
         <title>HireNova - {title}</title>
       </Head>
-      <Wrapper>
-        <Header />
-        <Content className={className}>{children}</Content>
-        {/* <Footer /> */}
-      </Wrapper>
-    </>
+      <Header />
+      <SideBar />
+      <Content className={className}>{children}</Content>
+      {/* <Footer /> */}
+    </Wrapper>
   );
 };
 

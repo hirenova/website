@@ -1,10 +1,14 @@
 import Link from "components/Link";
 import styled from "styled-components";
 
-const Wrapper = styled(Link)``;
+const Wrapper = styled(Link)`
+  @media (max-width: 1300px) {
+    margin-right: auto;
+  }
+`;
 
 const Image = styled.img`
-  height: 100%;
+  height: 40px;
 `;
 
 interface LogoProps {

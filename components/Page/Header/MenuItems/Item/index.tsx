@@ -10,7 +10,7 @@ interface ItemProps {
 
 const Wrapper = styled(Link)<LinkProps & { current: boolean }>`
   height: 100%;
-  padding: 10px;
+  padding: 12px 0;
   transition: 0.2s;
   :hover {
     color: #714cf8;
