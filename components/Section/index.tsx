@@ -6,10 +6,7 @@ interface SectionProps {
   label: string;
 }
 
-const Wrapper = styled.div`
-  height: 100vh;
-  padding: 10%;
-`;
+const Wrapper = styled.div``;
 
 const Section = ({ className, children }: SectionProps) => {
   return <Wrapper className={className}>{children}</Wrapper>;

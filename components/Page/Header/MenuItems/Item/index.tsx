@@ -2,16 +2,12 @@ import Link, { LinkProps } from "components/Link";
 import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 
-interface ItemProps {
-  className?: string;
-  children: React.ReactNode;
-  href: string;
-}
-
 const Wrapper = styled(Link)<LinkProps & { current: boolean }>`
   height: 100%;
   padding: 12px 0;
   transition: 0.2s;
+  font-weight: 500;
+  /* color: white; */
   :hover {
     color: #714cf8;
   }
@@ -22,6 +18,12 @@ const Wrapper = styled(Link)<LinkProps & { current: boolean }>`
         `
       : css``}
 `;
+
+interface ItemProps {
+  className?: string;
+  children: React.ReactNode;
+  href: string;
+}
 
 const Item = ({ className, children, href }: ItemProps) => {
   const { pathname } = useRouter();

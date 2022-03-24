@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Count from "./Count";
 
 const Wrapper = styled.div`
-  font-size: 20px;
+  font-size: 40px;
   font-weight: 600;
   letter-spacing: 0.05em;
 `;

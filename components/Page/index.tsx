@@ -18,7 +18,7 @@ export interface PageProps {
 }
 
 const navigation = {
-  home: { label: "Home", href: "/home" },
+  home: { label: "Home", href: "/" },
   candidates: { label: "Candidates", href: "/candidates" },
   jobs: { label: "Jobs", href: "/jobs" },
   contact: { label: "Contact", href: "/contact" },

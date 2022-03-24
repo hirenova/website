@@ -12,6 +12,7 @@ const Input_ = styled.input`
   font-size: 14px;
   border: none;
   font-family: inherit;
+  width: 100%;
   :focus {
     outline: none;
   }

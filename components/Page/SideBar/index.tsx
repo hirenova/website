@@ -43,6 +43,7 @@ const SideBar = ({ className, navigation }: SideBarProps) => {
   const { sideBarOpen, setSideBarOpen } = usePage();
 
   const onClickAway = () => {
+    console.log("callback");
     setSideBarOpen(false);
   };
 

@@ -14,20 +14,32 @@ import InputLocation from "./InputLocation";
 import SubmitButton from "./SubmitButton";
 
 const Wrapper = styled(Form)`
-  background: white;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 15px rgb(64 79 104 / 5%);
   display: flex;
   gap: 20px;
-  align-items: center;
-  width: fit-content;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgb(64 79 104 / 5%);
+  @media (min-width: 1000px) {
+    align-items: center;
+    max-width: fit-content;
+  }
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 const Separator = styled.div`
-  height: 40px;
-  background: grey;
-  width: 1px;
+  background: lightgrey;
+  @media (min-width: 1000px) {
+    height: 100%;
+    width: 1px;
+  }
+  @media (max-width: 1000px) {
+    height: 1px;
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 interface SearchFormProps {

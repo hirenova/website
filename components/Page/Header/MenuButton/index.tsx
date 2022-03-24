@@ -1,5 +1,5 @@
 import usePage from "hooks/usePage";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface MenuButtonProps {
@@ -15,13 +15,27 @@ const Wrapper = styled.img`
 `;
 
 const MenuButton = ({ className }: MenuButtonProps) => {
-  const { setSideBarOpen } = usePage();
+  const { sideBarOpen, setSideBarOpen } = usePage();
+  const [freeze, setFreeze] = useState<boolean>();
 
   const onClick: MouseEventHandler<HTMLImageElement> = (event) => {
-    setSideBarOpen((sideBarOpen) => !sideBarOpen);
+    if (!freeze) setSideBarOpen(!sideBarOpen);
   };
 
-  return <Wrapper className={className} src="menu.webp" onClick={onClick} />;
+  useEffect(() => {
+    setFreeze(true);
+    setTimeout(() => {
+      setFreeze(false);
+    }, 100);
+  }, [sideBarOpen]);
+
+  return (
+    <Wrapper
+      className={className}
+      src={sideBarOpen ? "close.webp" : "menu.webp"}
+      onClick={onClick}
+    />
+  );
 };
 
 export default MenuButton;

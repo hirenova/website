@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.span`
-  color: #792e8f;
+  /* color: #3169ad; */
 `;
 
 interface CountProps {

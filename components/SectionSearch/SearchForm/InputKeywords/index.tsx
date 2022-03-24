@@ -3,7 +3,12 @@ import { ChangeEventHandler } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled(Input)`
-  padding: 20px;
+  @media (min-width: 1000px) {
+    padding: 20px;
+  }
+  @media (max-width: 1000px) {
+    padding: 10px;
+  }
 `;
 
 interface InputKeywordsProps {

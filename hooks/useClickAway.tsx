@@ -1,6 +1,9 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
-const useClickAway = (callback: () => void) => {
+const useClickAway = (
+  callback: () => void,
+  ignore?: RefObject<HTMLDivElement>
+) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const onClickAway = (event: MouseEvent) => {
