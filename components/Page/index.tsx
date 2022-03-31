@@ -1,6 +1,9 @@
+import useApp from "hooks/useApp";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import PageProvider from "providers/PageProvider";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 import Content from "./Content";
@@ -15,30 +18,50 @@ export interface PageProps {
   children: React.ReactNode;
   className?: string;
   title: string;
+  display: "logged_in";
 }
 
-const navigation = {
-  home: { label: "Home", href: "/" },
-  candidates: { label: "Candidates", href: "/candidates" },
-  jobs: { label: "Jobs", href: "/jobs" },
-  contact: { label: "Contact", href: "/contact" },
-  about: { label: "About", href: "/about" },
-  login: { label: "Log In", href: "/login" },
-  signup: { label: "Sign Up", href: "/signup" },
-};
+const navigation: Array<{
+  label: string;
+  href: string;
+  display: "logged_in" | "not_logged_in" | "always";
+}> = [
+  { label: "Home", href: "/", display: "always" },
+  { label: "Dashboard", href: "/dashboard", display: "logged_in" },
+  { label: "Candidates", href: "/candidates", display: "always" },
+  { label: "Jobs", href: "/jobs", display: "always" },
+  { label: "Contact", href: "/contact", display: "always" },
+  { label: "About", href: "/about", display: "always" },
+];
 
 const Page: NextPage<PageProps> = ({
   children,
   className,
   title,
+  display,
 }: PageProps) => {
+  const router = useRouter();
+  const { auth } = useApp();
+
+  const navigationDisplayed = navigation.filter(
+    (item) =>
+      item.display == "always" ||
+      (auth && item.display == "logged_in") ||
+      (!auth && item.display == "not_logged_in")
+  );
+
+  useEffect(() => {
+    if (router && display == "logged_in" && !auth)
+      router.push({ pathname: "/login", query: { path: router.pathname } });
+  }, [router, auth, display]);
+
   return (
     <Wrapper>
       <Head>
         <title>HireNova - {title}</title>
       </Head>
-      <Header navigation={navigation} />
-      <SideBar navigation={navigation} />
+      <Header navigation={navigationDisplayed} />
+      <SideBar navigation={navigationDisplayed} />
       <Content className={className}>{children}</Content>
       {/* <Footer /> */}
     </Wrapper>

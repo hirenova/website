@@ -1,23 +1,33 @@
+import { UrlObject } from "url";
+
+import {
+  Button as ButtonChakra,
+  ButtonProps as ButtonChakraProps,
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.button`
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  padding: 0;
-  cursor: pointer;
-`;
+const Wrapper = styled(ButtonChakra)``;
 
-interface ButtonProps {
+export interface ButtonProps
+  extends Pick<
+    ButtonChakraProps,
+    "className" | "onClick" | "leftIcon" | "type"
+  > {
+  redirect?: UrlObject;
   children: React.ReactNode;
-  className?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  type?: "submit" | undefined;
 }
 
-const Button = ({ className, ...props }: ButtonProps) => {
-  return <Wrapper className={className} {...props} />;
+const Button = ({ className, redirect, onClick, ...props }: ButtonProps) => {
+  const router = useRouter();
+  const onClickIntercept: MouseEventHandler<HTMLButtonElement> = (event) => {
+    if (redirect) router.push(redirect);
+    if (onClick) onClick(event);
+  };
+  return (
+    <ButtonChakra className={className} onClick={onClickIntercept} {...props} />
+  );
 };
 
 export default Button;

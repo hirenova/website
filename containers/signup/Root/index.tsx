@@ -1,16 +1,16 @@
 import Page from "components/Page";
 import Section from "components/Section";
+import SectionSignUp from "components/SectionSignUp";
 import styled from "styled-components";
 
 const Wrapper = styled(Page)``;
 
-const About = () => {
+const SignUp = () => {
   return (
-    <Wrapper title="About">
-      <Section label="Search">Search</Section>
-      <Section label="Jobs">Jobs</Section>
+    <Wrapper title="Sign Up">
+      <SectionSignUp />
     </Wrapper>
   );
 };
 
-export default About;
+export default SignUp;

@@ -1,16 +1,16 @@
-import Button from "components/Button";
+// import Button from "components/Button";
+
+import { Button } from "@chakra-ui/react";
 import styled from "styled-components";
 
 const Wrapper = styled(Button)`
   background: #3169ad;
-  font-size: 18px;
-  padding: 10px;
-  border-radius: 6px;
+  /* font-size: 18px;
+  border-radius: 6px; */
   border: 2px solid #3169ad;
   color: white;
-  transition: 0.2s;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  /* transition: 0.2s; */
+  /* font-weight: 500; */
   :hover {
     background: white;
     color: #3169ad;

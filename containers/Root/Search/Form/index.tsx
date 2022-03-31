@@ -1,4 +1,6 @@
-import Form from "components/Form";
+import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { css } from "@emotion/react";
+import FormRaw from "components/Form";
 import { useRouter } from "next/router";
 import {
   ChangeEventHandler,
@@ -6,15 +8,17 @@ import {
   MouseEventHandler,
   useState,
 } from "react";
+import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import { encodeURIAll, encodeURIComponents } from "utils";
 
-import InputKeywords from "./InputKeywords";
-import InputLocation from "./InputLocation";
+import Keywords from "./Keywords";
+import Location from "./Location";
 import SubmitButton from "./SubmitButton";
 
-const Wrapper = styled(Form)`
+const Wrapper = styled(FormRaw)`
   display: flex;
+  color: black;
   gap: 20px;
   padding: 20px;
   background: white;
@@ -42,11 +46,11 @@ const Separator = styled.div`
   }
 `;
 
-interface SearchFormProps {
+interface FormProps {
   className?: string;
 }
 
-const SearchForm = ({ className }: SearchFormProps) => {
+const Form = ({ className }: FormProps) => {
   const [keywords, setKeywords] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
@@ -66,12 +70,11 @@ const SearchForm = ({ className }: SearchFormProps) => {
 
   return (
     <Wrapper className={className} onSubmit={onSubmit}>
-      <InputKeywords onChange={onKeywordsChange} />
-      <Separator />
-      <InputLocation onChange={onLocationChange} />
+      <Keywords onChange={onKeywordsChange} />
+      <Location onChange={onLocationChange} />
       <SubmitButton />
     </Wrapper>
   );
 };
 
-export default SearchForm;
+export default Form;

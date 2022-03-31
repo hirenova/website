@@ -4,17 +4,17 @@ import styled, { css } from "styled-components";
 
 const Wrapper = styled(Link)<LinkProps & { current: boolean }>`
   height: 100%;
-  padding: 12px 0;
+  padding: 10px;
   transition: 0.2s;
   font-weight: 500;
   /* color: white; */
   :hover {
-    color: #714cf8;
+    /* color: #714cf8; */
   }
   ${({ current }) =>
     current
       ? css`
-          color: #714cf8;
+          /* color: #714cf8; */
         `
       : css``}
 `;
