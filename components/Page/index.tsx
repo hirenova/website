@@ -18,7 +18,7 @@ export interface PageProps {
   children: React.ReactNode;
   className?: string;
   title: string;
-  display: "logged_in";
+  display?: "logged_in";
 }
 
 const navigation: Array<{
