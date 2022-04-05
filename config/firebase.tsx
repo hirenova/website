@@ -1,6 +1,6 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { Firestore, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,8 +12,6 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// let analytics, firestore;
-
 // if (firebaseConfig?.projectId) {
 //   const app = initializeApp(firebaseConfig);
 
@@ -21,14 +19,22 @@ const firebaseConfig = {
 //     analytics = getAnalytics();
 //   }
 
-//   firestore = getFirestore();
+//   db = getFirestore(app);
 // }
 
-// export { analytics, firestore };
+// export { analytics, db };
+
+// let db: Firestore;
+
+// if (typeof window !== "undefined") {
+//   const analytics = getAnalytics(app);
+//   const db = getFirestore(app);
+// }
+
+// export { db };
 
 const app = initializeApp(firebaseConfig);
 
-if (typeof window !== "undefined") {
-  const analytics = getAnalytics(app);
-  const database = getFirestore(app);
-}
+const db = getFirestore(app);
+
+export { db };

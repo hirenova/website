@@ -1,3 +1,4 @@
+import useApp from "hooks/useApp";
 import useAuth from "hooks/useAuth";
 import styled from "styled-components";
 
@@ -18,11 +19,18 @@ interface AuthProps {
 }
 
 const Auth = ({ className }: AuthProps) => {
+  const { user } = useApp();
+
   return (
     <Wrapper className={className}>
-      <Logout />
-      <Login />
-      <SignUp />
+      {user === undefined ? null : user ? (
+        <Logout />
+      ) : (
+        <>
+          <Login />
+          <SignUp />
+        </>
+      )}
     </Wrapper>
   );
 };

@@ -1,7 +1,7 @@
 import Page from "components/Page";
-import Section from "components/Section";
-import SectionSignUp from "components/SectionSignUp";
 import styled from "styled-components";
+
+import SectionSignUp from "./SectionSignUp";
 
 const Wrapper = styled(Page)``;
 

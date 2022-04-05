@@ -22,3 +22,7 @@ export const encodeURIAll = (
   }
   return `${directory}?${params}`;
 };
+
+export const redirectLogin = () => {};
+
+export const redirectSignUp = () => {};

@@ -1,3 +1,4 @@
+import { FirebaseError } from "firebase/app";
 import { User, getAuth, onAuthStateChanged } from "firebase/auth";
 import React, {
   Dispatch,
@@ -7,18 +8,24 @@ import React, {
   useState,
 } from "react";
 
+type AuthErrorType = FirebaseError | null;
+
+type UserType = User | null | undefined;
+
 export interface AppContextValue {
-  auth: boolean;
-  user: User | null;
-  //   setAuth: Dispatch<SetStateAction<boolean>>;
-  //   setUser: Dispatch<SetStateAction<User | null>>;
+  user: UserType;
+  authLoading: boolean;
+  authError: AuthErrorType;
+  setAuthLoading: Dispatch<SetStateAction<boolean>>;
+  setAuthError: Dispatch<SetStateAction<AuthErrorType>>;
 }
 
 const InitialAppContextValue: AppContextValue = {
-  auth: false,
-  user: null,
-  //   setAuth: () => {},
-  //   setUser: () => {},
+  user: undefined,
+  authLoading: false,
+  authError: null,
+  setAuthError: () => {},
+  setAuthLoading: () => {},
 };
 
 export const AppContext = createContext(InitialAppContextValue);
@@ -27,14 +34,14 @@ export interface AppProviderProps {
   children: React.ReactNode;
 }
 const AppProvider = ({ children }: AppProviderProps) => {
-  const [auth, setAuth] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserType>();
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
+  const [authError, setAuthError] = useState<AuthErrorType>(null);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribeAuthStateChange = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setAuth(Boolean(user));
     });
     return () => {
       unsubscribeAuthStateChange();
@@ -42,7 +49,11 @@ const AppProvider = ({ children }: AppProviderProps) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ auth, user }}>{children}</AppContext.Provider>
+    <AppContext.Provider
+      value={{ user, authLoading, authError, setAuthError, setAuthLoading }}
+    >
+      {children}
+    </AppContext.Provider>
   );
 };
 

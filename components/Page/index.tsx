@@ -41,19 +41,19 @@ const Page: NextPage<PageProps> = ({
   display,
 }: PageProps) => {
   const router = useRouter();
-  const { auth } = useApp();
+  const { user } = useApp();
 
   const navigationDisplayed = navigation.filter(
     (item) =>
       item.display == "always" ||
-      (auth && item.display == "logged_in") ||
-      (!auth && item.display == "not_logged_in")
+      (user && item.display == "logged_in") ||
+      (!user && item.display == "not_logged_in")
   );
 
   useEffect(() => {
-    if (router && display == "logged_in" && !auth)
+    if (router && display == "logged_in" && !user)
       router.push({ pathname: "/login", query: { path: router.pathname } });
-  }, [router, auth, display]);
+  }, [router, user, display]);
 
   return (
     <Wrapper>

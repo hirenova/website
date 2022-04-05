@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.form``;
 
-interface FormProps {
+export interface FormProps {
   className?: string;
   children: React.ReactNode;
   onSubmit?: FormEventHandler<HTMLFormElement>;

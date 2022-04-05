@@ -1,14 +1,14 @@
 import Page from "components/Page";
 import styled from "styled-components";
 
-import Login from "./Login";
+import SectionLogin from "./SectionLogin";
 
 const Wrapper = styled(Page)``;
 
 const Root = () => {
   return (
     <Wrapper title="Log in">
-      <Login />
+      <SectionLogin />
     </Wrapper>
   );
 };

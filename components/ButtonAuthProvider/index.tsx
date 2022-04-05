@@ -1,46 +1,60 @@
 import Button, { ButtonProps } from "components/Button";
-import useAuth from "hooks/useAuth";
+import useAuth, { AuthWithProviderParams } from "hooks/useAuth";
 import { MouseEventHandler } from "react";
-import { IconType } from "react-icons";
+import { FaFacebook, FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
 import styled from "styled-components";
 
 const Wrapper = styled(Button)``;
 
+const MethodLabel = styled.span`
+  margin-left: 5px;
+`;
+
+const ProviderLabel = styled.span`
+  margin-right: auto;
+`;
+
 export interface ButtonAuthProviderProps
-  extends Pick<ButtonProps, "className"> {
-  icon: ButtonProps["leftIcon"];
-  label: string;
-  provider: "google";
-  method: "login" | "sign_up";
-}
-
-const methods = {
-  login: { label: "Log in with" },
-  sign_up: { label: "Sign up with" },
-};
-
-const MethodLabel = styled.span``;
-
-const ProviderLabel = styled.span``;
+  extends ButtonProps,
+    AuthWithProviderParams {}
 
 const ButtonAuthProvider = ({
   className,
-  label,
-  provider,
-  method,
-  icon,
+  authProviderId,
+  authMethodId,
+  accountTypeId,
+  ...props
 }: ButtonAuthProviderProps) => {
-  const { loginProvider } = useAuth();
+  const { authWithProvider } = useAuth();
 
   const onClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
-    await loginProvider({ provider });
+    await authWithProvider({ accountTypeId, authMethodId, authProviderId });
+  };
+
+  const authProviderSettings = {
+    google: { label: "Google", icon: <FaGoogle /> },
+    facebook: { label: "Facebook", icon: <FaFacebook /> },
+    github: { label: "GitHub", icon: <FaGithub /> },
+    microsoft: { label: "Microsoft", icon: <FaMicrosoft /> },
+  };
+
+  const authMethodSettings = {
+    login: { label: "Log in with" },
+    sign_up: { label: "Sign up with" },
   };
 
   return (
-    <Wrapper className={className} onClick={onClick} leftIcon={icon}>
-      <MethodLabel>{methods[method].label}</MethodLabel>
+    <Wrapper
+      className={className}
+      onClick={onClick}
+      leftIcon={authProviderSettings[authProviderId].icon}
+      {...props}
+    >
+      <MethodLabel>{authMethodSettings[authMethodId].label}</MethodLabel>
       &nbsp;
-      <ProviderLabel>{label}</ProviderLabel>
+      <ProviderLabel>
+        {authProviderSettings[authProviderId].label}
+      </ProviderLabel>
     </Wrapper>
   );
 };

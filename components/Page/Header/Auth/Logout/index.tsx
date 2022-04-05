@@ -5,18 +5,7 @@ import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
 import styled, { css } from "styled-components";
 
-interface StyledButtonProps extends ButtonProps {
-  $auth: boolean;
-}
-
-const Wrapper = styled(Button)<StyledButtonProps>`
-  ${({ $auth }) =>
-    $auth
-      ? css``
-      : css`
-          display: none;
-        `}
-`;
+const Wrapper = styled(Button)``;
 
 interface LogoutProps {
   className?: string;
@@ -27,15 +16,13 @@ const Logout = ({ className }: LogoutProps) => {
 
   const { logout } = useAuth();
 
-  const { auth } = useApp();
-
   const onClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
     await logout();
     router.push({ pathname: "/" });
   };
 
   return (
-    <Wrapper className={className} onClick={onClick} $auth={auth}>
+    <Wrapper className={className} onClick={onClick}>
       Log out
     </Wrapper>
   );
