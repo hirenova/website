@@ -1,14 +1,20 @@
+import Box, { BoxProps } from "components/Box";
 import styled from "styled-components";
 
-const Wrapper = styled.div``;
+const Wrapper = styled(Box)``;
 
-interface SectionContentProps {
-  children: React.ReactNode;
-  className?: string;
-}
+interface SectionContentProps extends BoxProps {}
 
-const SectionContent = ({ className, children }: SectionContentProps) => {
-  return <Wrapper className={className}>{children}</Wrapper>;
+const SectionContent = ({
+  className,
+  children,
+  ...props
+}: SectionContentProps) => {
+  return (
+    <Wrapper className={className} {...props}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default SectionContent;

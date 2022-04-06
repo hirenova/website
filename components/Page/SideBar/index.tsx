@@ -1,18 +1,16 @@
+import Box, { BoxProps } from "components/Box";
+import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import useClickAway from "hooks/useClickAway";
 import usePage from "hooks/usePage";
-import { MutableRefObject, RefObject } from "react";
-import styled, { ThemedStyledFunction, css } from "styled-components";
+import styled, { css } from "styled-components";
 
 import Menu from "./Menu";
 
-interface StyledSideBarProps
-  extends Partial<ThemedStyledFunction<"div", any, {}, never>> {
-  className?: string;
-  children: React.ReactNode;
+interface StyledSidebarProps extends BoxProps {
   open: boolean;
 }
 
-const Wrapper = styled.div<StyledSideBarProps>`
+const Wrapper = styled(Box)<StyledSidebarProps>`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -34,26 +32,47 @@ const Wrapper = styled.div<StyledSideBarProps>`
   transition: 0.3s
 `;
 
-interface SideBarProps {
-  className?: string;
+const SidebarContent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledButtonsAuth = styled(ButtonsAuth)`
+  padding: 20px 40px;
+`;
+
+interface SidebarProps extends ButtonsAuthProps {
   navigation: object;
 }
 
-const SideBar = ({ className, navigation }: SideBarProps) => {
-  const { sideBarOpen, setSideBarOpen } = usePage();
+const Sidebar = ({
+  className,
+  navigation,
+  showLogin,
+  showLogout,
+  showSignUp,
+}: SidebarProps) => {
+  const { sidebarOpen, setSidebarOpen } = usePage();
 
   const onClickAway = () => {
     console.log("callback");
-    setSideBarOpen(false);
+    setSidebarOpen(false);
   };
 
   const { ref } = useClickAway(onClickAway);
 
   return (
-    <Wrapper ref={ref} className={className} open={sideBarOpen}>
-      <Menu navigation={navigation} />
+    <Wrapper as="div" ref={ref} open={sidebarOpen}>
+      <SidebarContent className={className}>
+        <Menu navigation={navigation} />
+        <StyledButtonsAuth
+          showLogin={showLogin}
+          showLogout={showLogout}
+          showSignUp={showSignUp}
+        />
+      </SidebarContent>
     </Wrapper>
   );
 };
 
-export default SideBar;
+export default Sidebar;

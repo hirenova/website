@@ -1,16 +1,10 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  CloseButton,
-  useToast,
-} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import Box from "components/Box";
 import Heading from "components/Heading";
 import { FirebaseError } from "firebase/app";
 import useApp from "hooks/useApp";
 import { AccountTypeIdType, AuthMethodIdType } from "hooks/useAuth";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -39,7 +33,6 @@ const Modes = styled(Box)`
   @media (max-width: 800px) {
     flex-direction: column;
   }
-  border-color: red;
 `;
 
 const Separator = styled.div`
@@ -66,16 +59,19 @@ const SeparatorLine = styled.div`
 `;
 
 const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
-  const [accountType, setAccountType] =
+  const [accountTypeId, setAccountTypeId] =
     useState<AccountTypeIdType>("candidate");
 
-  const { authError } = useApp();
+  const { authError, user } = useApp();
 
   const toast = useToast();
+
+  const router = useRouter();
 
   useEffect(() => {
     const errors: { [key in FirebaseError["code"]]: string } = {
       "auth/email-already-exists": "Email already exists.",
+      "auth/email-already-in-use": "Email address already in use.",
       "auth/internal-error":
         "Unexpected internal error. Please try again later.",
       "auth/invalid-email": "Email address invalid.",
@@ -84,6 +80,7 @@ const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
         "The maximum allowed number of users has been exceeded. Please try again later.",
       "auth/user-not-found": "User not found.",
       "auth/weak-password": "Password must be at least six characters long.",
+      "auth/wrong-password": "Wrong password.",
     };
 
     if (!authError) return;
@@ -92,28 +89,26 @@ const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
     toast({ title: "Error", description, status: "error" });
   }, [toast, authError]);
 
+  useEffect(() => {
+    if (user)
+      router.push({ pathname: router.query?.path?.toString() || "/dashboard" });
+  }, [router, user]);
+
   return (
     <Wrapper className={className}>
       {/* <ChooseAccountType
         accountType={accountType}
         setAccountType={setAccountType}
       /> */}
-      {/* <Alert status="error">
-        <AlertIcon />
-        <AlertTitle mr={2}>Your browser is outdated!</AlertTitle>
-        <AlertDescription>
-          Your Chakra experience may be degraded.
-        </AlertDescription>
-      </Alert> */}
       <Modes>
-        <Providers accountTypeId={accountType} authMethodId={authMethodId} />
+        <Providers accountTypeId={accountTypeId} authMethodId={authMethodId} />
         <Separator>
           <SeparatorLine />
           <Heading size="md">or</Heading>
           <SeparatorLine />
         </Separator>
         <EmailPassword
-          accountTypeId={accountType}
+          accountTypeId={accountTypeId}
           authMethodId={authMethodId}
         />
       </Modes>

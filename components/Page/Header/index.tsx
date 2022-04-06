@@ -1,18 +1,20 @@
+import Box, { BoxProps } from "components/Box";
+import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import styled from "styled-components";
 
-import Auth from "./Auth";
 import Logo from "./Logo";
 import MenuButton from "./MenuButton";
 import MenuItems from "./MenuItems";
 
 // import AuthButtons from "./AuthButtons";
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   display: flex;
   position: absolute;
   align-items: center;
   background: white;
   width: 100vw;
+  max-width: 100%;
   top: 0px;
   padding: 0 30px;
   height: 80px;
@@ -21,16 +23,34 @@ const Wrapper = styled.div`
   z-index: 11;
 `;
 
-interface HeaderProps {
+const ButtonsAuthResponsive = styled(ButtonsAuth)`
+  margin-left: auto;
+  @media (max-width: 1300px) {
+    display: none;
+  }
+`;
+
+export interface HeaderProps extends BoxProps, ButtonsAuthProps {
   navigation: object;
 }
 
-const Header = ({ navigation }: HeaderProps) => {
+const Header = ({
+  className,
+  navigation,
+  showLogin,
+  showLogout,
+  showSignUp,
+  ...props
+}: HeaderProps) => {
   return (
-    <Wrapper>
+    <Wrapper className={className} {...props}>
       <Logo />
       <MenuItems navigation={navigation} />
-      <Auth />
+      <ButtonsAuthResponsive
+        showLogin={showLogin}
+        showLogout={showLogout}
+        showSignUp={showSignUp}
+      />
       <MenuButton />
     </Wrapper>
   );

@@ -7,7 +7,7 @@ const Wrapper = styled(Page)``;
 
 const SignUp = () => {
   return (
-    <Wrapper title="Sign Up">
+    <Wrapper title="Sign Up" showSignUp={false}>
       <SectionSignUp />
     </Wrapper>
   );

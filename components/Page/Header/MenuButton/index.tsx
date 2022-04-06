@@ -15,11 +15,11 @@ const Wrapper = styled.img`
 `;
 
 const MenuButton = ({ className }: MenuButtonProps) => {
-  const { sideBarOpen, setSideBarOpen } = usePage();
+  const { sidebarOpen, setSidebarOpen } = usePage();
   const [freeze, setFreeze] = useState<boolean>();
 
   const onClick: MouseEventHandler<HTMLImageElement> = (event) => {
-    if (!freeze) setSideBarOpen(!sideBarOpen);
+    if (!freeze) setSidebarOpen(!sidebarOpen);
   };
 
   useEffect(() => {
@@ -27,12 +27,12 @@ const MenuButton = ({ className }: MenuButtonProps) => {
     setTimeout(() => {
       setFreeze(false);
     }, 100);
-  }, [sideBarOpen]);
+  }, [sidebarOpen]);
 
   return (
     <Wrapper
       className={className}
-      src={sideBarOpen ? "close.webp" : "menu.webp"}
+      src={sidebarOpen ? "close.webp" : "menu.webp"}
       onClick={onClick}
     />
   );

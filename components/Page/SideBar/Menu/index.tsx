@@ -1,22 +1,22 @@
+import Box, { BoxProps } from "components/Box";
 import styled from "styled-components";
 
 import Item from "./Item";
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   display: flex;
   flex-direction: column;
 `;
 
-interface MenuProps {
-  className?: string;
+interface MenuProps extends BoxProps {
   navigation: object;
 }
 
-const Menu = ({ className, navigation }: MenuProps) => {
+const Menu = ({ className, navigation, ...props }: MenuProps) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} {...props}>
       {Object.entries(navigation).map(([id, item]) => (
-        <Item key={id} href={item.href}>
+        <Item key={id} redirect={item.href}>
           {item.label}
         </Item>
       ))}

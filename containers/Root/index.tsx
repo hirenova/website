@@ -1,14 +1,17 @@
 import Page from "components/Page";
 import styled from "styled-components";
 
-import Search from "./Search";
+import SectionSearch from "./SectionSearch";
 
 const Wrapper = styled(Page)``;
 
 const Root = () => {
   return (
     <Wrapper title="Home">
-      <Search />
+      <SectionSearch />
+      <SectionSearch />
+      <SectionSearch />
+      <SectionSearch />
     </Wrapper>
   );
 };

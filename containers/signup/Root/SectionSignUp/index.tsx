@@ -9,7 +9,6 @@ const Wrapper = styled(Section)`
   justify-content: center;
   min-height: 100vh;
   padding-top: 80px;
-  border: 1px solid red;
 `;
 
 interface SectionSignUpProps {}

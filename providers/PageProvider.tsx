@@ -6,13 +6,13 @@ import React, {
 } from "react";
 
 export interface PageContextValue {
-  sideBarOpen: boolean;
-  setSideBarOpen: Dispatch<SetStateAction<boolean>>;
+  sidebarOpen: boolean;
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const InitialPageContextValue: PageContextValue = {
-  sideBarOpen: false,
-  setSideBarOpen: () => {},
+  sidebarOpen: false,
+  setSidebarOpen: () => {},
 };
 
 export const PageContext = createContext(InitialPageContextValue);
@@ -21,9 +21,9 @@ export interface PageProviderProps {
   children: React.ReactNode;
 }
 const PageProvider = ({ children }: PageProviderProps) => {
-  const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   return (
-    <PageContext.Provider value={{ sideBarOpen, setSideBarOpen }}>
+    <PageContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
       {children}
     </PageContext.Provider>
   );

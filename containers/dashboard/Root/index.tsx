@@ -1,6 +1,4 @@
 import Page from "components/Page";
-import useApp from "hooks/useApp";
-import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import Dashboard from "./Dashboard";
