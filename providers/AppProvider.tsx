@@ -8,9 +8,11 @@ import React, {
   useState,
 } from "react";
 
-type AuthErrorType = FirebaseError | null;
+export type AuthErrorType = FirebaseError | null;
 
-type UserType = User | null | undefined;
+export type UserType = User | null | undefined;
+
+export type UserDocument = {} | null | undefined;
 
 export interface AppContextValue {
   user: UserType;
@@ -50,7 +52,13 @@ const AppProvider = ({ children }: AppProviderProps) => {
 
   return (
     <AppContext.Provider
-      value={{ user, authLoading, authError, setAuthError, setAuthLoading }}
+      value={{
+        user,
+        authLoading,
+        authError,
+        setAuthError,
+        setAuthLoading,
+      }}
     >
       {children}
     </AppContext.Provider>

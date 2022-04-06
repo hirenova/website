@@ -4,7 +4,11 @@ import styled from "styled-components";
 const Wrapper = styled(Button)`
   justify-content: flex-start;
   background: white;
-  padding: 20px 40px;
+  padding: 25px 40px;
+  border-radius: unset;
+  :focus {
+    box-shadow: unset;
+  }
 `;
 
 interface ItemProps extends ButtonProps {}

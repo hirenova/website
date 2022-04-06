@@ -55,7 +55,6 @@ const Sidebar = ({
   const { sidebarOpen, setSidebarOpen } = usePage();
 
   const onClickAway = () => {
-    console.log("callback");
     setSidebarOpen(false);
   };
 

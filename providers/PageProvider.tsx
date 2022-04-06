@@ -1,9 +1,12 @@
+import Box, { BoxProps } from "components/Box";
 import React, {
   Dispatch,
+  ProviderProps,
   SetStateAction,
   createContext,
   useState,
 } from "react";
+import styled from "styled-components";
 
 export interface PageContextValue {
   sidebarOpen: boolean;
@@ -17,14 +20,17 @@ const InitialPageContextValue: PageContextValue = {
 
 export const PageContext = createContext(InitialPageContextValue);
 
-export interface PageProviderProps {
-  children: React.ReactNode;
-}
-const PageProvider = ({ children }: PageProviderProps) => {
+export interface PageProviderProps extends BoxProps {}
+
+const PageContent = styled(Box)``;
+
+const PageProvider = ({ children, className, ...props }: PageProviderProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   return (
-    <PageContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
-      {children}
+    <PageContext.Provider value={{ sidebarOpen, setSidebarOpen }} {...props}>
+      <PageContent className={className} {...props}>
+        {children}
+      </PageContent>
     </PageContext.Provider>
   );
 };

@@ -1,5 +1,6 @@
-import { Button, Input } from "@chakra-ui/react";
+import Button from "components/Button";
 import Form from "components/Form";
+import Input from "components/Input";
 import useAuth, { AuthParams } from "hooks/useAuth";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import styled from "styled-components";
@@ -41,14 +42,18 @@ const EmailPassword = ({
     <Wrapper className={className} onSubmit={onSubmit}>
       <Input
         type="email"
-        required
+        isRequired
+        autoComplete="email"
         placeholder="Email"
         onChange={onChangeEmail}
         value={email}
       />
       <Input
         type="password"
-        required
+        isRequired
+        autoComplete={
+          authMethodId === "login" ? "current-password" : "new-password"
+        }
         placeholder="Password"
         onChange={onChangePassword}
         value={password}

@@ -9,9 +9,6 @@ const Root = () => {
   return (
     <Wrapper title="Home">
       <SectionSearch />
-      <SectionSearch />
-      <SectionSearch />
-      <SectionSearch />
     </Wrapper>
   );
 };

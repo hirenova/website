@@ -11,7 +11,11 @@ import Footer from "./Footer";
 import Header, { HeaderProps } from "./Header";
 import Sidebar from "./Sidebar";
 
-const Wrapper = styled(PageProvider)``;
+const Wrapper = styled(PageProvider)`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
 
 export type DisplayConditionIdType = "logged_in" | "not_logged_in" | "always";
 
@@ -57,7 +61,7 @@ const Page: NextPage<PageProps> = ({
   }, [router, user, displayConditionId]);
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Head>
         <title>HireNova - {title}</title>
       </Head>

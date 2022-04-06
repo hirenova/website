@@ -1,3 +1,4 @@
+import { db } from "config/firebase";
 import { FirebaseError } from "firebase/app";
 import {
   FacebookAuthProvider,
@@ -10,12 +11,10 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 import useApp from "./useApp";
-
-// import { db } from "config/firebase";
-// import { collection, doc, setDoc } from "firebase/firestore";
-// import { useCollection } from "react-firebase-hooks/firestore";
 
 export type AccountTypeIdType = "candidate" | "employer";
 
@@ -38,9 +37,9 @@ export interface AuthWithEmailPasswordParams extends AuthParams {
 }
 
 const useAuth = () => {
-  // const [users, usersLoading, setUsersLoading] = useCollection(
-  //   collection(db, "users")
-  // );
+  const [users, usersLoading, usersError] = useCollection(
+    collection(db, "users")
+  );
 
   const { setAuthError } = useApp();
 
@@ -51,18 +50,7 @@ const useAuth = () => {
     github: () => new GithubAuthProvider(),
   };
 
-  const errors = {
-    "auth/email-already-exists": "Email already exists.",
-    "auth/internal-error": "Unexpected internal error. Please try again later.",
-    "auth/invalid-email": "Email address invalid.",
-    "auth/invalid-password": "Password must be at least six characters.",
-    "auth/maximum-user-count-exceeded":
-      "The maximum allowed number of users has been exceeded. Please try again later.",
-    "auth/user-not-found": "User not found.",
-  };
-
   const authWithProvider = async ({
-    accountTypeId,
     authMethodId,
     authProviderId,
   }: AuthWithProviderParams) => {
@@ -72,8 +60,17 @@ const useAuth = () => {
       prompt: "select_account",
     });
     if (authMethodId === "login" || authMethodId === "sign_up") {
-      const credential = await signInWithPopup(auth, provider);
-      console.log(credential);
+      try {
+        const credential = await signInWithPopup(auth, provider);
+        const userDocument = await getDoc(
+          doc(db, "users", credential.user.uid)
+        );
+        if (!userDocument.exists())
+          await setDoc(doc(db, "users", credential.user.uid), {});
+      } catch (error) {
+        if (error instanceof FirebaseError) setAuthError(error);
+        else console.log(error);
+      }
     }
   };
 
@@ -97,14 +94,13 @@ const useAuth = () => {
           email,
           password
         );
+        await setDoc(doc(db, "users", credential.user.uid), {});
       }
     } catch (error) {
       if (error instanceof FirebaseError) {
         setAuthError(error);
       }
     }
-
-    // setDoc(doc(db, `${accountType}s`, uid), { test2: 321 });
   };
 
   const logout = async () => {

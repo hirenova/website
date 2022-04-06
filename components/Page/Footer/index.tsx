@@ -4,11 +4,12 @@ import styled from "styled-components";
 interface FooterProps extends BoxProps {}
 
 const Wrapper = styled(Box)`
-  background: #f0e0e0;
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: auto;
+  background: #eee;
 `;
 
 const Footer = ({ className, ...props }: FooterProps) => {
