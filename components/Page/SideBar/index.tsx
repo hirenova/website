@@ -29,7 +29,7 @@ const Wrapper = styled(Box)<StyledSidebarProps>`
           }
         `
       : css``}
-  transition: 0.3s
+  transition: 0.3s;
 `;
 
 const SidebarContent = styled(Box)`
