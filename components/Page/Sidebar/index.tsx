@@ -1,8 +1,10 @@
-import { Divider } from "@chakra-ui/react";
 import Box, { BoxProps } from "components/Box";
 import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
+import Divider from "components/Divider";
+import { auth } from "config/firebase";
 import useClickAway from "hooks/useClickAway";
 import usePage from "hooks/usePage";
+import { useAuthState } from "react-firebase-hooks/auth";
 import styled, { css } from "styled-components";
 
 import Menu, { MenuProps } from "./Menu";
@@ -55,6 +57,8 @@ const Sidebar = ({
 }: SidebarProps) => {
   const { sidebarOpen, setSidebarOpen } = usePage();
 
+  const [user] = useAuthState(auth);
+
   const onClickAway = () => {
     setSidebarOpen(false);
   };
@@ -64,7 +68,21 @@ const Sidebar = ({
   return (
     <Wrapper as="div" ref={ref} open={sidebarOpen}>
       <SidebarContent className={className}>
-        <Menu navigation={navigation} />
+        <Menu
+          navigation={navigation.filter(
+            (item) => !item.redirect?.pathname?.startsWith("/dashboard/")
+          )}
+        />
+        {user ? (
+          <>
+            <Divider />
+            <Menu
+              navigation={navigation.filter((item) =>
+                item.redirect?.pathname?.startsWith("/dashboard/")
+              )}
+            />
+          </>
+        ) : null}
         <Divider />
         <StyledButtonsAuth
           showLogin={showLogin}

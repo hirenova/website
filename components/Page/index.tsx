@@ -62,17 +62,17 @@ const navigation: BoxNavigationProps["navigation"] = [
   {
     children: "Resume",
     redirect: { pathname: "/dashboard/resume" },
-    displayConditionId: "always",
+    displayConditionId: "logged_in",
   },
   {
     children: "Notifications",
     redirect: { pathname: "/dashboard/notifications" },
-    displayConditionId: "always",
+    displayConditionId: "logged_in",
   },
   {
     children: "Applications",
     redirect: { pathname: "/dashboard/applications" },
-    displayConditionId: "always",
+    displayConditionId: "logged_in",
   },
 ];
 
@@ -100,7 +100,9 @@ const Page: NextPage<PageProps> = ({
         <title>HireNova - {title}</title>
       </Head>
       <Header
-        navigation={navigation}
+        navigation={navigation.filter(
+          (item) => !item.redirect?.pathname?.startsWith("/dashboard/")
+        )}
         showLogin={showLogin}
         showSignUp={showSignUp}
         showLogout={showLogout}
