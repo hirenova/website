@@ -16,10 +16,17 @@ const Wrapper = styled(BoxNavigation)`
 
 interface MenuItemsProps extends Omit<BoxNavigationProps, "buttonAs"> {}
 
-const MenuItems = ({ className, children, ...props }: MenuItemsProps) => {
+const MenuItems = ({
+  className,
+  navigation,
+  children,
+  ...props
+}: MenuItemsProps) => {
   return (
-    <Wrapper className={className} buttonAs={Item} {...props}>
-      {children}
+    <Wrapper className={className} {...props}>
+      {navigation.map((item, index) => (
+        <Item key={index} {...item} />
+      ))}
     </Wrapper>
   );
 };

@@ -1,5 +1,3 @@
-import { UrlObject } from "url";
-
 import ButtonNavigation, {
   ButtonNavigationProps,
 } from "components/ButtonNavigation";
@@ -7,12 +5,8 @@ import styled from "styled-components";
 
 const Wrapper = styled(ButtonNavigation)`
   justify-content: flex-start;
-  background: white;
+  /* background: white; */
   padding: 25px 40px;
-  border-radius: unset;
-  :focus {
-    box-shadow: unset;
-  }
 `;
 
 export interface ItemProps extends ButtonNavigationProps {}

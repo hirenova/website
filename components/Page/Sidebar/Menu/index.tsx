@@ -10,10 +10,12 @@ const Wrapper = styled(BoxNavigation)`
 
 export interface MenuProps extends Omit<BoxNavigationProps, "buttonAs"> {}
 
-const Menu = ({ className, children, ...props }: MenuProps) => {
+const Menu = ({ className, children, navigation, ...props }: MenuProps) => {
   return (
-    <Wrapper className={className} buttonAs={Item} {...props}>
-      {children}
+    <Wrapper className={className} {...props}>
+      {navigation.map((item, index) => (
+        <Item key={index} {...item} />
+      ))}
     </Wrapper>
   );
 };

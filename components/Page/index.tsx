@@ -54,6 +54,26 @@ const navigation: BoxNavigationProps["navigation"] = [
     redirect: { pathname: "/about" },
     displayConditionId: "always",
   },
+  {
+    children: "Profile",
+    redirect: { pathname: "/dashboard/profile" },
+    displayConditionId: "logged_in",
+  },
+  {
+    children: "Resume",
+    redirect: { pathname: "/dashboard/resume" },
+    displayConditionId: "always",
+  },
+  {
+    children: "Notifications",
+    redirect: { pathname: "/dashboard/notifications" },
+    displayConditionId: "always",
+  },
+  {
+    children: "Applications",
+    redirect: { pathname: "/dashboard/applications" },
+    displayConditionId: "always",
+  },
 ];
 
 const Page: NextPage<PageProps> = ({
@@ -68,14 +88,6 @@ const Page: NextPage<PageProps> = ({
   const router = useRouter();
 
   const [user] = useAuthState(auth);
-
-  // const navigationDisplayed: BoxNavigationProps["navigation"] =
-  //   navigation.filter(
-  //     (item) =>
-  //       item.displayConditionId == "always" ||
-  //       (user && item.displayConditionId == "logged_in") ||
-  //       (!user && item.displayConditionId == "not_logged_in")
-  //   );
 
   useEffect(() => {
     if (displayConditionId == "logged_in" && !user)
