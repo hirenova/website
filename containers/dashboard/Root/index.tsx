@@ -7,7 +7,7 @@ const Wrapper = styled(Page)``;
 
 const Root = () => {
   return (
-    <Wrapper title="Dashboard" display="logged_in">
+    <Wrapper title="Dashboard" displayConditionId="logged_in">
       <Dashboard />
     </Wrapper>
   );

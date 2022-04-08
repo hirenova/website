@@ -1,7 +1,11 @@
-import Button, { ButtonProps } from "components/Button";
+import { UrlObject } from "url";
+
+import ButtonNavigation, {
+  ButtonNavigationProps,
+} from "components/ButtonNavigation";
 import styled from "styled-components";
 
-const Wrapper = styled(Button)`
+const Wrapper = styled(ButtonNavigation)`
   justify-content: flex-start;
   background: white;
   padding: 25px 40px;
@@ -11,7 +15,7 @@ const Wrapper = styled(Button)`
   }
 `;
 
-interface ItemProps extends ButtonProps {}
+export interface ItemProps extends ButtonNavigationProps {}
 
 const Item = ({ className, children, ...props }: ItemProps) => {
   return (

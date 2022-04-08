@@ -1,5 +1,6 @@
+import { auth } from "config/firebase";
 import { FirebaseError } from "firebase/app";
-import { User, getAuth, onAuthStateChanged } from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
 import React, {
   Dispatch,
   SetStateAction,
@@ -41,7 +42,6 @@ const AppProvider = ({ children }: AppProviderProps) => {
   const [authError, setAuthError] = useState<AuthErrorType>(null);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribeAuthStateChange = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });

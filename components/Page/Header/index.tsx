@@ -1,4 +1,5 @@
 import Box, { BoxProps } from "components/Box";
+import { BoxNavigationProps } from "components/BoxNavigation";
 import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import styled from "styled-components";
 
@@ -30,9 +31,10 @@ const ButtonsAuthResponsive = styled(ButtonsAuth)`
   }
 `;
 
-export interface HeaderProps extends BoxProps, ButtonsAuthProps {
-  navigation: object;
-}
+export interface HeaderProps
+  extends BoxProps,
+    Pick<BoxNavigationProps, "navigation">,
+    ButtonsAuthProps {}
 
 const Header = ({
   className,

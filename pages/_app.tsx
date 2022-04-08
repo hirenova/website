@@ -6,14 +6,15 @@ import "../styles/globals.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import AppProvider from "providers/AppProvider";
+
+// import AppProvider from "providers/AppProvider";
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
-      <AppProvider>
+      {/* <AppProvider>
         <Component {...pageProps} />
-      </AppProvider>
+      </AppProvider> */}
     </ChakraProvider>
   );
 }

@@ -7,7 +7,7 @@ const Wrapper = styled(Page)``;
 
 const Root = () => {
   return (
-    <Wrapper title="Home">
+    <Wrapper title="Home" displayConditionId="always">
       <SectionSearch />
     </Wrapper>
   );

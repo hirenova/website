@@ -1,27 +1,28 @@
-import { db } from "config/firebase";
+import { auth, db } from "config/firebase";
 import { FirebaseError } from "firebase/app";
 import {
   FacebookAuthProvider,
   GithubAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
+  UserCredential,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 import useApp from "./useApp";
+
+// import { useCollection } from "react-firebase-hooks/firestore";
 
 export type AccountTypeIdType = "candidate" | "employer";
 
 export type AuthMethodIdType = "login" | "sign_up";
 
 export interface AuthParams {
-  accountTypeId: AccountTypeIdType;
   authMethodId: AuthMethodIdType;
 }
 
@@ -37,11 +38,19 @@ export interface AuthWithEmailPasswordParams extends AuthParams {
 }
 
 const useAuth = () => {
-  const [users, usersLoading, usersError] = useCollection(
-    collection(db, "users")
-  );
+  // const [users, usersLoading, usersError] = useCollection(
+  //   collection(db, "users")
+  // );
 
   const { setAuthError } = useApp();
+
+  const onAuth = async (credential: UserCredential) => {
+    const userDocument = await getDoc(doc(db, "users", credential.user.uid));
+    await updateProfile(credential.user, { displayName: "hello" });
+    if (!userDocument.exists()) {
+      await setDoc(doc(db, "users", credential.user.uid), {});
+    }
+  };
 
   const authProviders = {
     google: () => new GoogleAuthProvider(),
@@ -54,7 +63,6 @@ const useAuth = () => {
     authMethodId,
     authProviderId,
   }: AuthWithProviderParams) => {
-    const auth = getAuth();
     const provider = authProviders[authProviderId]();
     provider.setCustomParameters({
       prompt: "select_account",
@@ -62,11 +70,7 @@ const useAuth = () => {
     if (authMethodId === "login" || authMethodId === "sign_up") {
       try {
         const credential = await signInWithPopup(auth, provider);
-        const userDocument = await getDoc(
-          doc(db, "users", credential.user.uid)
-        );
-        if (!userDocument.exists())
-          await setDoc(doc(db, "users", credential.user.uid), {});
+        await onAuth(credential);
       } catch (error) {
         if (error instanceof FirebaseError) setAuthError(error);
         else console.log(error);
@@ -75,12 +79,10 @@ const useAuth = () => {
   };
 
   const authWithEmailPassword = async ({
-    accountTypeId,
     authMethodId,
     email,
     password,
   }: AuthWithEmailPasswordParams) => {
-    const auth = getAuth();
     try {
       if (authMethodId === "login") {
         const credential = await signInWithEmailAndPassword(
@@ -88,13 +90,14 @@ const useAuth = () => {
           email,
           password
         );
+        await onAuth(credential);
       } else {
         const credential = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
-        await setDoc(doc(db, "users", credential.user.uid), {});
+        await onAuth(credential);
       }
     } catch (error) {
       if (error instanceof FirebaseError) {
@@ -104,7 +107,6 @@ const useAuth = () => {
   };
 
   const logout = async () => {
-    const auth = getAuth();
     try {
       await signOut(auth);
     } catch (error) {

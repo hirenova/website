@@ -1,8 +1,9 @@
+import BoxNavigation, { BoxNavigationProps } from "components/BoxNavigation";
 import styled from "styled-components";
 
 import Item from "./Item";
 
-const Wrapper = styled.div`
+const Wrapper = styled(BoxNavigation)`
   @media (min-width: 1300px) {
     display: flex;
     align-items: center;
@@ -13,19 +14,12 @@ const Wrapper = styled.div`
   }
 `;
 
-interface MenuItemsProps {
-  className?: string;
-  navigation: object;
-}
+interface MenuItemsProps extends Omit<BoxNavigationProps, "buttonAs"> {}
 
-const MenuItems = ({ className, navigation }: MenuItemsProps) => {
+const MenuItems = ({ className, children, ...props }: MenuItemsProps) => {
   return (
-    <Wrapper className={className}>
-      {Object.entries(navigation).map(([id, item]) => (
-        <Item key={item.href} href={item.href}>
-          {item.label}
-        </Item>
-      ))}
+    <Wrapper className={className} buttonAs={Item} {...props}>
+      {children}
     </Wrapper>
   );
 };

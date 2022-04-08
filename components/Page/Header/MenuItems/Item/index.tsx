@@ -1,38 +1,22 @@
+import ButtonNavigation, {
+  ButtonNavigationProps,
+} from "components/ButtonNavigation";
 import Link, { LinkProps } from "components/Link";
 import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 
-const Wrapper = styled(Link)<LinkProps & { current: boolean }>`
+const Wrapper = styled(ButtonNavigation)`
   height: 100%;
   padding: 10px;
   transition: 0.2s;
   font-weight: 500;
-  /* color: white; */
-  :hover {
-    /* color: #714cf8; */
-  }
-  ${({ current }) =>
-    current
-      ? css`
-          /* color: #714cf8; */
-        `
-      : css``}
 `;
 
-interface ItemProps {
-  className?: string;
-  children: React.ReactNode;
-  href: string;
-}
+interface ItemProps extends ButtonNavigationProps {}
 
-const Item = ({ className, children, href }: ItemProps) => {
-  const { pathname } = useRouter();
+const Item = ({ className, children, ...props }: ItemProps) => {
   return (
-    <Wrapper
-      className={className}
-      href={href}
-      current={href === "/" ? pathname === href : pathname.startsWith(href)}
-    >
+    <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
   );

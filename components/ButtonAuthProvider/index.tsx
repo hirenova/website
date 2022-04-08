@@ -22,13 +22,12 @@ const ButtonAuthProvider = ({
   className,
   authProviderId,
   authMethodId,
-  accountTypeId,
   ...props
 }: ButtonAuthProviderProps) => {
   const { authWithProvider } = useAuth();
 
   const onClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
-    await authWithProvider({ accountTypeId, authMethodId, authProviderId });
+    await authWithProvider({ authMethodId, authProviderId });
   };
 
   const authProviderSettings = {

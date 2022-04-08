@@ -59,9 +59,6 @@ const SeparatorLine = styled.div`
 `;
 
 const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
-  const [accountTypeId, setAccountTypeId] =
-    useState<AccountTypeIdType>("candidate");
-
   const { authError, user } = useApp();
 
   const toast = useToast();
@@ -96,21 +93,14 @@ const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
 
   return (
     <Wrapper className={className}>
-      {/* <ChooseAccountType
-        accountType={accountType}
-        setAccountType={setAccountType}
-      /> */}
       <Modes>
-        <Providers accountTypeId={accountTypeId} authMethodId={authMethodId} />
+        <Providers authMethodId={authMethodId} />
         <Separator>
           <SeparatorLine />
           <Heading size="md">or</Heading>
           <SeparatorLine />
         </Separator>
-        <EmailPassword
-          accountTypeId={accountTypeId}
-          authMethodId={authMethodId}
-        />
+        <EmailPassword authMethodId={authMethodId} />
       </Modes>
     </Wrapper>
   );

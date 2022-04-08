@@ -1,9 +1,11 @@
-import useApp from "hooks/useApp";
+import { BoxNavigationProps } from "components/BoxNavigation";
+import { auth } from "config/firebase";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PageProvider from "providers/PageProvider";
 import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 
 import Content from "./Content";
@@ -17,23 +19,41 @@ const Wrapper = styled(PageProvider)`
   flex-direction: column;
 `;
 
-export type DisplayConditionIdType = "logged_in" | "not_logged_in" | "always";
+export interface PageProps
+  extends Partial<HeaderProps>,
+    Pick<BoxNavigationProps["navigation"][number], "displayConditionId"> {}
 
-export interface PageProps extends Partial<HeaderProps> {
-  displayConditionId?: DisplayConditionIdType;
-}
-
-const navigation: Array<{
-  label: string;
-  href: string;
-  displayConditionId: DisplayConditionIdType;
-}> = [
-  { label: "Home", href: "/", displayConditionId: "always" },
-  { label: "Dashboard", href: "/dashboard", displayConditionId: "logged_in" },
-  { label: "Candidates", href: "/candidates", displayConditionId: "always" },
-  { label: "Jobs", href: "/jobs", displayConditionId: "always" },
-  { label: "Contact", href: "/contact", displayConditionId: "always" },
-  { label: "About", href: "/about", displayConditionId: "always" },
+const navigation: BoxNavigationProps["navigation"] = [
+  {
+    children: "Home",
+    redirect: { pathname: "/" },
+    displayConditionId: "always",
+  },
+  {
+    children: "Dashboard",
+    redirect: { pathname: "/dashboard" },
+    displayConditionId: "logged_in",
+  },
+  {
+    children: "Candidates",
+    redirect: { pathname: "/candidates" },
+    displayConditionId: "always",
+  },
+  {
+    children: "Jobs",
+    redirect: { pathname: "/jobs" },
+    displayConditionId: "always",
+  },
+  {
+    children: "Contact",
+    redirect: { pathname: "/contact" },
+    displayConditionId: "always",
+  },
+  {
+    children: "About",
+    redirect: { pathname: "/about" },
+    displayConditionId: "always",
+  },
 ];
 
 const Page: NextPage<PageProps> = ({
@@ -46,17 +66,19 @@ const Page: NextPage<PageProps> = ({
   showSignUp = true,
 }: PageProps) => {
   const router = useRouter();
-  const { user } = useApp();
 
-  const navigationDisplayed = navigation.filter(
-    (item) =>
-      item.displayConditionId == "always" ||
-      (user && item.displayConditionId == "logged_in") ||
-      (!user && item.displayConditionId == "not_logged_in")
-  );
+  const [user] = useAuthState(auth);
+
+  // const navigationDisplayed: BoxNavigationProps["navigation"] =
+  //   navigation.filter(
+  //     (item) =>
+  //       item.displayConditionId == "always" ||
+  //       (user && item.displayConditionId == "logged_in") ||
+  //       (!user && item.displayConditionId == "not_logged_in")
+  //   );
 
   useEffect(() => {
-    if (router && displayConditionId == "logged_in" && !user)
+    if (displayConditionId == "logged_in" && !user)
       router.push({ pathname: "/login", query: { path: router.pathname } });
   }, [router, user, displayConditionId]);
 
@@ -66,13 +88,13 @@ const Page: NextPage<PageProps> = ({
         <title>HireNova - {title}</title>
       </Head>
       <Header
-        navigation={navigationDisplayed}
+        navigation={navigation}
         showLogin={showLogin}
         showSignUp={showSignUp}
         showLogout={showLogout}
       />
       <Sidebar
-        navigation={navigationDisplayed}
+        navigation={navigation}
         showLogin={showLogin}
         showSignUp={showSignUp}
         showLogout={showLogout}

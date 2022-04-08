@@ -7,7 +7,7 @@ const Wrapper = styled(Box)`
   padding: 0.75rem;
 `;
 
-interface CardProps extends BoxProps {}
+export interface CardProps extends BoxProps {}
 
 const Card = ({ className, ...props }: CardProps) => {
   return <Wrapper className={className} {...props}></Wrapper>;

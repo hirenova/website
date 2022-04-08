@@ -1,10 +1,11 @@
+import { Divider } from "@chakra-ui/react";
 import Box, { BoxProps } from "components/Box";
 import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import useClickAway from "hooks/useClickAway";
 import usePage from "hooks/usePage";
 import styled, { css } from "styled-components";
 
-import Menu from "./Menu";
+import Menu, { MenuProps } from "./Menu";
 
 interface StyledSidebarProps extends BoxProps {
   open: boolean;
@@ -41,9 +42,9 @@ const StyledButtonsAuth = styled(ButtonsAuth)`
   padding: 20px 40px;
 `;
 
-interface SidebarProps extends ButtonsAuthProps {
-  navigation: object;
-}
+export interface SidebarProps
+  extends ButtonsAuthProps,
+    Pick<MenuProps, "navigation"> {}
 
 const Sidebar = ({
   className,
@@ -64,6 +65,7 @@ const Sidebar = ({
     <Wrapper as="div" ref={ref} open={sidebarOpen}>
       <SidebarContent className={className}>
         <Menu navigation={navigation} />
+        <Divider />
         <StyledButtonsAuth
           showLogin={showLogin}
           showLogout={showLogout}

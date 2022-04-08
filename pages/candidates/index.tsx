@@ -6,7 +6,7 @@ const Wrapper = styled(Page)``;
 
 const Candidates = () => {
   return (
-    <Wrapper title="Candidates">
+    <Wrapper title="Candidates" displayConditionId="always">
       <Section label="Candidates">Candidates</Section>
     </Wrapper>
   );

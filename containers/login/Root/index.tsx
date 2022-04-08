@@ -7,7 +7,11 @@ const Wrapper = styled(Page)``;
 
 const Root = () => {
   return (
-    <Wrapper title="Log in" showLogin={false}>
+    <Wrapper
+      title="Log in"
+      showLogin={false}
+      displayConditionId="not_logged_in"
+    >
       <SectionLogin />
     </Wrapper>
   );

@@ -16,11 +16,7 @@ interface EmailPasswordProps extends AuthParams {
   className?: string;
 }
 
-const EmailPassword = ({
-  className,
-  authMethodId,
-  accountTypeId,
-}: EmailPasswordProps) => {
+const EmailPassword = ({ className, authMethodId }: EmailPasswordProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -35,7 +31,7 @@ const EmailPassword = ({
   };
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    authWithEmailPassword({ accountTypeId, authMethodId, email, password });
+    authWithEmailPassword({ authMethodId, email, password });
   };
 
   return (
