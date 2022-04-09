@@ -2,27 +2,26 @@ import { BoxProps } from "components/Box";
 import Heading from "components/Heading";
 import Section from "components/Section";
 import SectionContent from "components/SectionContent";
-import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 
 import Statistics from "./Statistics";
 
 const Wrapper = styled(Section)`
-  padding-top: 80px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
-const Content = styled(SectionContent)`
-  padding: 5%;
-`;
+const Content = styled(SectionContent)``;
 
 interface DashboardProps extends BoxProps {}
 
 const Dashboard = ({ className, ...props }: DashboardProps) => {
-  // const [user, userLoading, userError] = useAuthState(auth);
   return (
     <Wrapper className={className} label="Dashboard" {...props}>
+      <Heading>Dashboard</Heading>
       <Content>
-        <Heading>Dashboard</Heading>
         <Statistics />
       </Content>
     </Wrapper>

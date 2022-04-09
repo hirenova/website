@@ -9,7 +9,6 @@ import Statistic from "./Statistic";
 const Wrapper = styled(Box)`
   display: grid;
   gap: 20px;
-  padding: 20px;
   @media (max-width: 800px) {
     grid-template-columns: auto;
   }
@@ -25,7 +24,6 @@ const Wrapper = styled(Box)`
 
 const StatIcon = styled(Icon)`
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 10px;
   grid-row: span 2;
   grid-column: 1;

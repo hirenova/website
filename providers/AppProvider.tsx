@@ -5,9 +5,9 @@ import React, {
   Dispatch,
   SetStateAction,
   createContext,
-  useEffect,
   useState,
 } from "react";
+import { AuthStateHook, useAuthState } from "react-firebase-hooks/auth";
 
 export type AuthErrorType = FirebaseError | null;
 
@@ -16,7 +16,9 @@ export type UserType = User | null | undefined;
 export type UserDocument = {} | null | undefined;
 
 export interface AppContextValue {
-  user: UserType;
+  user: AuthStateHook[0];
+  userLoading: AuthStateHook[1];
+  userError: AuthStateHook[2];
   authLoading: boolean;
   authError: AuthErrorType;
   sidebarOpen: boolean;
@@ -27,6 +29,8 @@ export interface AppContextValue {
 
 const InitialAppContextValue: AppContextValue = {
   user: undefined,
+  userLoading: true,
+  userError: undefined,
   authLoading: false,
   authError: null,
   setAuthError: () => {},
@@ -41,7 +45,7 @@ export interface AppProviderProps {
   children: React.ReactNode;
 }
 const AppProvider = ({ children }: AppProviderProps) => {
-  const [user, setUser] = useState<AppContextValue["user"]>();
+  const [user, userLoading, userError] = useAuthState(auth);
   const [authLoading, setAuthLoading] =
     useState<AppContextValue["authLoading"]>(false);
   const [authError, setAuthError] =
@@ -49,19 +53,12 @@ const AppProvider = ({ children }: AppProviderProps) => {
   const [sidebarOpen, setSidebarOpen] =
     useState<AppContextValue["sidebarOpen"]>(false);
 
-  useEffect(() => {
-    const unsubscribeAuthStateChange = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => {
-      unsubscribeAuthStateChange();
-    };
-  }, []);
-
   return (
     <AppContext.Provider
       value={{
         user,
+        userLoading,
+        userError,
         authLoading,
         authError,
         sidebarOpen,

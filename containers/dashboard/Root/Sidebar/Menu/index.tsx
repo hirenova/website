@@ -1,17 +1,18 @@
 import BoxNavigation, { BoxNavigationProps } from "components/BoxNavigation";
 import styled from "styled-components";
 
-import Item, { ItemProps } from "./Item";
+import Item from "./Item";
 
 const Wrapper = styled(BoxNavigation)`
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
+  gap: 2px;
+  min-width: 200px;
 `;
 
-export interface MenuProps extends Omit<BoxNavigationProps, "buttonAs"> {}
+interface MenuProps extends BoxNavigationProps {}
 
-const Menu = ({ className, children, navigation, ...props }: MenuProps) => {
+const Menu = ({ className, navigation, ...props }: MenuProps) => {
   return (
     <Wrapper className={className} {...props}>
       {navigation.map((item, index) => (

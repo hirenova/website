@@ -1,12 +1,10 @@
 import Box, { BoxProps } from "components/Box";
 import { BoxNavigationProps } from "components/BoxNavigation";
-import { auth } from "config/firebase";
 import useApp from "hooks/useApp";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 
 import Content from "./Content";
@@ -23,9 +21,11 @@ const Wrapper = styled(Box)`
 export interface PageProps
   extends BoxProps,
     Partial<HeaderProps>,
-    Pick<BoxNavigationProps["navigation"][number], "displayConditionId"> {}
+    Pick<BoxNavigationProps["navigation"][number], "displayConditionId"> {
+  showFooter?: boolean;
+}
 
-const navigation: BoxNavigationProps["navigation"] = [
+export const navigation: BoxNavigationProps["navigation"] = [
   {
     children: "Home",
     redirect: { pathname: "/" },
@@ -86,10 +86,11 @@ const Page: NextPage<PageProps> = ({
   showLogin = true,
   showLogout = true,
   showSignUp = true,
+  showFooter = true,
 }: PageProps) => {
   const router = useRouter();
 
-  const [user] = useAuthState(auth);
+  const { user, userLoading } = useApp();
 
   const { sidebarOpen, setSidebarOpen } = useApp();
 
@@ -98,13 +99,14 @@ const Page: NextPage<PageProps> = ({
   }, [setSidebarOpen]);
 
   useEffect(() => {
-    if (displayConditionId == "logged_in" && !user)
+    if (userLoading) return;
+    if (displayConditionId == "logged_in" && user === null)
       router.push({ pathname: "/login", query: { path: router.pathname } });
-  }, [router, user, displayConditionId]);
+  }, [router, user, displayConditionId, userLoading]);
 
   return (
     <Wrapper
-      className={className}
+      // className={className}
       overflow={sidebarOpen ? "hidden" : "unset"}
       height={sidebarOpen ? "100vh" : "unset"}
     >
@@ -126,8 +128,7 @@ const Page: NextPage<PageProps> = ({
         showLogout={showLogout}
       />
       <Content className={className}>{children}</Content>
-      {sidebarOpen ? "yes" : "no"}
-      <Footer />
+      {showFooter ? <Footer /> : null}
     </Wrapper>
   );
 };

@@ -1,9 +1,9 @@
 import Button, { ButtonProps } from "components/Button";
-import { auth } from "config/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import useApp from "hooks/useApp";
 import styled from "styled-components";
 
 const Wrapper = styled(Button)`
+  display: block;
   background: unset;
   font-family: Montserrat;
   font-weight: 500;
@@ -30,7 +30,7 @@ const ButtonNavigation = ({
   displayConditionId,
   ...props
 }: ButtonNavigationProps) => {
-  const [user] = useAuthState(auth);
+  const { user } = useApp();
 
   const display =
     displayConditionId == "always" ||

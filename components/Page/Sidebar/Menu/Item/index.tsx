@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Wrapper = styled(ButtonNavigation)`
   justify-content: flex-start;
   /* background: white; */
-  padding: 25px 40px;
+  padding: 20px 40px;
 `;
 
 export interface ItemProps extends ButtonNavigationProps {}

@@ -1,10 +1,8 @@
 import Box, { BoxProps } from "components/Box";
 import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import Divider from "components/Divider";
-import { auth } from "config/firebase";
 import useApp from "hooks/useApp";
 import useClickAway from "hooks/useClickAway";
-import { useAuthState } from "react-firebase-hooks/auth";
 import styled, { css } from "styled-components";
 
 import Menu, { MenuProps } from "./Menu";
@@ -59,7 +57,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const { sidebarOpen, setSidebarOpen } = useApp();
 
-  const [user] = useAuthState(auth);
+  const { user } = useApp();
 
   const onClickAway = () => {
     setSidebarOpen(false);

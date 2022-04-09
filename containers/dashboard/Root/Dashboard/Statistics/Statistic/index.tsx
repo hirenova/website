@@ -8,6 +8,7 @@ const Wrapper = styled(Card)`
   justify-content: space-between;
   justify-items: right;
   align-items: center;
+  padding: 20px;
 `;
 
 interface StatisticProps extends CardProps {}
