@@ -1,14 +1,16 @@
+import Box, { BoxProps } from "components/Box";
 import styled from "styled-components";
 
-const Wrapper = styled.div``;
+const Wrapper = styled(Box)``;
 
-interface ContentProps {
-  children: React.ReactNode;
-  className?: string;
-}
+interface ContentProps extends BoxProps {}
 
-const Content = ({ className, children }: ContentProps) => {
-  return <Wrapper className={className}>{children}</Wrapper>;
+const Content = ({ className, children, ...props }: ContentProps) => {
+  return (
+    <Wrapper className={className} {...props}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default Content;

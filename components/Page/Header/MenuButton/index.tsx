@@ -1,4 +1,4 @@
-import usePage from "hooks/usePage";
+import useApp from "hooks/useApp";
 import { MouseEventHandler, useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ const Wrapper = styled.img`
 `;
 
 const MenuButton = ({ className }: MenuButtonProps) => {
-  const { sidebarOpen, setSidebarOpen } = usePage();
+  const { sidebarOpen, setSidebarOpen } = useApp();
   const [freeze, setFreeze] = useState<boolean>();
 
   const onClick: MouseEventHandler<HTMLImageElement> = (event) => {

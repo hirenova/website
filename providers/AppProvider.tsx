@@ -19,8 +19,10 @@ export interface AppContextValue {
   user: UserType;
   authLoading: boolean;
   authError: AuthErrorType;
+  sidebarOpen: boolean;
   setAuthLoading: Dispatch<SetStateAction<boolean>>;
   setAuthError: Dispatch<SetStateAction<AuthErrorType>>;
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const InitialAppContextValue: AppContextValue = {
@@ -29,6 +31,8 @@ const InitialAppContextValue: AppContextValue = {
   authError: null,
   setAuthError: () => {},
   setAuthLoading: () => {},
+  sidebarOpen: false,
+  setSidebarOpen: () => {},
 };
 
 export const AppContext = createContext(InitialAppContextValue);
@@ -37,9 +41,13 @@ export interface AppProviderProps {
   children: React.ReactNode;
 }
 const AppProvider = ({ children }: AppProviderProps) => {
-  const [user, setUser] = useState<UserType>();
-  const [authLoading, setAuthLoading] = useState<boolean>(false);
-  const [authError, setAuthError] = useState<AuthErrorType>(null);
+  const [user, setUser] = useState<AppContextValue["user"]>();
+  const [authLoading, setAuthLoading] =
+    useState<AppContextValue["authLoading"]>(false);
+  const [authError, setAuthError] =
+    useState<AppContextValue["authError"]>(null);
+  const [sidebarOpen, setSidebarOpen] =
+    useState<AppContextValue["sidebarOpen"]>(false);
 
   useEffect(() => {
     const unsubscribeAuthStateChange = onAuthStateChanged(auth, (user) => {
@@ -56,8 +64,10 @@ const AppProvider = ({ children }: AppProviderProps) => {
         user,
         authLoading,
         authError,
+        sidebarOpen,
         setAuthError,
         setAuthLoading,
+        setSidebarOpen,
       }}
     >
       {children}

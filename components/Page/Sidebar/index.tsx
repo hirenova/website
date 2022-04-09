@@ -2,8 +2,8 @@ import Box, { BoxProps } from "components/Box";
 import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
 import Divider from "components/Divider";
 import { auth } from "config/firebase";
+import useApp from "hooks/useApp";
 import useClickAway from "hooks/useClickAway";
-import usePage from "hooks/usePage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled, { css } from "styled-components";
 
@@ -15,11 +15,13 @@ interface StyledSidebarProps extends BoxProps {
 
 const Wrapper = styled(Box)<StyledSidebarProps>`
   position: fixed;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 100vh;
-  padding-top: calc(75px + 30px);
+  height: calc(100vh - 80px);
+
+  margin-top: 80px;
   z-index: 10;
   background: white;
   box-shadow: 5px 0 15px rgb(64 79 104 / 5%);
@@ -55,7 +57,7 @@ const Sidebar = ({
   showLogout,
   showSignUp,
 }: SidebarProps) => {
-  const { sidebarOpen, setSidebarOpen } = usePage();
+  const { sidebarOpen, setSidebarOpen } = useApp();
 
   const [user] = useAuthState(auth);
 
