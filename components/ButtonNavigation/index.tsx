@@ -1,9 +1,9 @@
 import Button, { ButtonProps } from "components/Button";
 import useApp from "hooks/useApp";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { acceptLogin, acceptProfileType } from "utils";
 
 const Wrapper = styled(Button)`
-  display: block;
   background: unset;
   font-family: Montserrat;
   font-weight: 500;
@@ -15,27 +15,39 @@ const Wrapper = styled(Button)`
   :focus {
     box-shadow: unset;
   }
+  /* ${(display) =>
+    display
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `} */
 `;
 
-export type DisplayConditionId = "logged_in" | "not_logged_in" | "always";
+export type DisplayConditionAuthId = "logged_in" | "not_logged_in" | "always";
+
+export type DisplayConditionProfileTypeId =
+  | "candidate"
+  | "employer"
+  | "always"
+  | "either"
+  | "neither";
 
 export interface ButtonNavigationProps extends ButtonProps {
-  displayConditionId: DisplayConditionId;
+  displayConditionAuthId: DisplayConditionAuthId;
+  displayConditionProfileTypeId: DisplayConditionProfileTypeId;
 }
 
 const ButtonNavigation = ({
   className,
   children,
   redirect,
-  displayConditionId,
+  displayConditionAuthId,
+  displayConditionProfileTypeId,
   ...props
 }: ButtonNavigationProps) => {
-  const { user } = useApp();
-
-  const display =
-    displayConditionId == "always" ||
-    (user && displayConditionId == "logged_in") ||
-    (!user && displayConditionId == "not_logged_in");
+  const { user, profileTypeIdSelected } = useApp();
 
   return (
     <Wrapper
@@ -47,7 +59,12 @@ const ButtonNavigation = ({
       //     ? router.pathname === redirect.pathname
       //     : router.pathname.startsWith(redirect.pathname))
       // }
-      display={display ? "unset" : "none"}
+      display={
+        acceptLogin(displayConditionAuthId, user) &&
+        acceptProfileType(displayConditionProfileTypeId, profileTypeIdSelected)
+          ? "unset"
+          : "none"
+      }
       {...props}
     >
       {children}

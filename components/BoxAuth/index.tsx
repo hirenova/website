@@ -3,15 +3,13 @@ import Box from "components/Box";
 import Heading from "components/Heading";
 import { FirebaseError } from "firebase/app";
 import useApp from "hooks/useApp";
-import { AccountTypeIdType, AuthMethodIdType } from "hooks/useAuth";
+import { AuthMethodIdType } from "hooks/useAuth";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 import EmailPassword from "./EmailPassword";
 import Providers from "./Providers";
-
-// import ChooseAccountType from "./ChooseAccountType";
 
 const Wrapper = styled.div`
   display: flex;

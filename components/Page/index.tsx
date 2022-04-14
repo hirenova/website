@@ -6,10 +6,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { acceptLogin, acceptProfileType } from "utils";
 
 import Content from "./Content";
 import Footer from "./Footer";
 import Header, { HeaderProps } from "./Header";
+import Loading from "./Loading";
 import Sidebar from "./Sidebar";
 
 const Wrapper = styled(Box)`
@@ -21,7 +23,10 @@ const Wrapper = styled(Box)`
 export interface PageProps
   extends BoxProps,
     Partial<HeaderProps>,
-    Pick<BoxNavigationProps["navigation"][number], "displayConditionId"> {
+    Pick<
+      BoxNavigationProps["navigation"][number],
+      "displayConditionAuthId" | "displayConditionProfileTypeId"
+    > {
   showFooter?: boolean;
 }
 
@@ -29,52 +34,98 @@ export const navigation: BoxNavigationProps["navigation"] = [
   {
     children: "Home",
     redirect: { pathname: "/" },
-    displayConditionId: "always",
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Dashboard",
     redirect: { pathname: "/dashboard" },
-    displayConditionId: "logged_in",
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Candidates",
     redirect: { pathname: "/candidates" },
-    displayConditionId: "always",
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Jobs",
     redirect: { pathname: "/jobs" },
-    displayConditionId: "always",
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Contact",
     redirect: { pathname: "/contact" },
-    displayConditionId: "always",
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "About",
     redirect: { pathname: "/about" },
-    displayConditionId: "always",
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Profile",
     redirect: { pathname: "/dashboard/profile" },
-    displayConditionId: "logged_in",
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "always",
   },
   {
     children: "Resume",
     redirect: { pathname: "/dashboard/resume" },
-    displayConditionId: "logged_in",
-  },
-  {
-    children: "Notifications",
-    redirect: { pathname: "/dashboard/notifications" },
-    displayConditionId: "logged_in",
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "candidate",
   },
   {
     children: "Applications",
     redirect: { pathname: "/dashboard/applications" },
-    displayConditionId: "logged_in",
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "candidate",
+  },
+  {
+    children: "Jobs posted",
+    redirect: { pathname: "/dashboard/jobs-posted" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "employer",
+  },
+  {
+    children: "Notifications",
+    redirect: { pathname: "/dashboard/notifications" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "always",
+  },
+  {
+    children: "TEST candidate",
+    redirect: { pathname: "/dashboard/candidate" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "candidate",
+  },
+  {
+    children: "TEST employer",
+    redirect: { pathname: "/dashboard/employer" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "employer",
+  },
+  {
+    children: "TEST either",
+    redirect: { pathname: "/dashboard/either" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "either",
+  },
+  {
+    children: "TEST neither",
+    redirect: { pathname: "/dashboard/neither" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "neither",
+  },
+  {
+    children: "TEST always",
+    redirect: { pathname: "/dashboard/always" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "always",
   },
 ];
 
@@ -82,7 +133,8 @@ const Page: NextPage<PageProps> = ({
   children,
   className,
   title,
-  displayConditionId,
+  displayConditionAuthId,
+  displayConditionProfileTypeId,
   showLogin = true,
   showLogout = true,
   showSignUp = true,
@@ -90,9 +142,9 @@ const Page: NextPage<PageProps> = ({
 }: PageProps) => {
   const router = useRouter();
 
-  const { user, userLoading } = useApp();
+  const { user, userLoading, profileTypeIdSelected } = useApp();
 
-  const { sidebarOpen, setSidebarOpen } = useApp();
+  const { sidebarOpen, setSidebarOpen, userDocument } = useApp();
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -100,13 +152,36 @@ const Page: NextPage<PageProps> = ({
 
   useEffect(() => {
     if (userLoading) return;
-    if (displayConditionId == "logged_in" && user === null)
-      router.push({ pathname: "/login", query: { path: router.pathname } });
-  }, [router, user, displayConditionId, userLoading]);
+
+    const accept = acceptLogin(displayConditionAuthId, user);
+
+    if (!accept) {
+      console.log("login not accepted");
+      // router.push({ pathname: "/login", query: { path: router.pathname } });
+    }
+  }, [userLoading, displayConditionAuthId, user, router]);
+
+  useEffect(() => {
+    if (!userDocument) return;
+
+    const accept = acceptProfileType(
+      displayConditionProfileTypeId,
+      profileTypeIdSelected
+    );
+
+    if (!accept) {
+      console.log("profileType not accepted");
+      // router.push({ pathname: "/" });
+    }
+  }, [
+    userDocument,
+    displayConditionProfileTypeId,
+    profileTypeIdSelected,
+    router,
+  ]);
 
   return (
     <Wrapper
-      // className={className}
       overflow={sidebarOpen ? "hidden" : "unset"}
       height={sidebarOpen ? "100vh" : "unset"}
     >
@@ -127,7 +202,11 @@ const Page: NextPage<PageProps> = ({
         showSignUp={showSignUp}
         showLogout={showLogout}
       />
-      <Content className={className}>{children}</Content>
+      {userLoading ? (
+        <Loading />
+      ) : (
+        <Content className={className}>{children}</Content>
+      )}
       {showFooter ? <Footer /> : null}
     </Wrapper>
   );

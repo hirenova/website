@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled(Box)``;
 
-interface SectionProps extends BoxProps {
+export interface SectionProps extends BoxProps {
   label: string;
 }
 

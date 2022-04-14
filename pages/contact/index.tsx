@@ -6,7 +6,11 @@ const Wrapper = styled(Page)``;
 
 const Contact = () => {
   return (
-    <Wrapper title="Contact" displayConditionId="always">
+    <Wrapper
+      title="Contact"
+      displayConditionAuthId="always"
+      displayConditionProfileTypeId="always"
+    >
       <Section label="Contact">Contact</Section>
     </Wrapper>
   );
