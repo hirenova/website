@@ -39,7 +39,7 @@ export const navigation: BoxNavigationProps["navigation"] = [
   },
   {
     children: "Dashboard",
-    redirect: { pathname: "/dashboard" },
+    redirect: { pathname: "/dashboard/profile" },
     displayConditionAuthId: "logged_in",
     displayConditionProfileTypeId: "always",
   },
@@ -72,6 +72,12 @@ export const navigation: BoxNavigationProps["navigation"] = [
     redirect: { pathname: "/dashboard/profile" },
     displayConditionAuthId: "logged_in",
     displayConditionProfileTypeId: "always",
+  },
+  {
+    children: "Post a job",
+    redirect: { pathname: "/dashboard/post-job" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "employer",
   },
   {
     children: "Resume",
@@ -127,6 +133,12 @@ export const navigation: BoxNavigationProps["navigation"] = [
     displayConditionAuthId: "logged_in",
     displayConditionProfileTypeId: "always",
   },
+  {
+    children: "Settings",
+    redirect: { pathname: "/dashboard/settings" },
+    displayConditionAuthId: "logged_in",
+    displayConditionProfileTypeId: "always",
+  },
 ];
 
 const Page: NextPage<PageProps> = ({
@@ -142,9 +154,10 @@ const Page: NextPage<PageProps> = ({
 }: PageProps) => {
   const router = useRouter();
 
-  const { user, userLoading, profileTypeIdSelected } = useApp();
+  const { user, userLoading, userDocumentDataLoading, profileTypeIdSelected } =
+    useApp();
 
-  const { sidebarOpen, setSidebarOpen, userDocument } = useApp();
+  const { sidebarOpen, setSidebarOpen, userDocumentData } = useApp();
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -156,13 +169,18 @@ const Page: NextPage<PageProps> = ({
     const accept = acceptLogin(displayConditionAuthId, user);
 
     if (!accept) {
-      console.log("login not accepted");
-      // router.push({ pathname: "/login", query: { path: router.pathname } });
+      console.error(
+        "login not accepted",
+        router.pathname,
+        displayConditionAuthId,
+        typeof user
+      );
+      router.push({ pathname: "/login", query: { path: router.pathname } });
     }
   }, [userLoading, displayConditionAuthId, user, router]);
 
   useEffect(() => {
-    if (!userDocument) return;
+    if (userDocumentDataLoading) return;
 
     const accept = acceptProfileType(
       displayConditionProfileTypeId,
@@ -170,15 +188,26 @@ const Page: NextPage<PageProps> = ({
     );
 
     if (!accept) {
-      console.log("profileType not accepted");
-      // router.push({ pathname: "/" });
+      console.error(
+        "profileType not accepted",
+        router.pathname,
+        displayConditionProfileTypeId,
+        profileTypeIdSelected
+      );
+      router.push({ pathname: "/" });
     }
   }, [
-    userDocument,
+    userDocumentDataLoading,
     displayConditionProfileTypeId,
     profileTypeIdSelected,
     router,
   ]);
+
+  const showLoading =
+    userLoading ||
+    userDocumentDataLoading ||
+    !acceptLogin(displayConditionAuthId, user) ||
+    !acceptProfileType(displayConditionProfileTypeId, profileTypeIdSelected);
 
   return (
     <Wrapper
@@ -190,7 +219,9 @@ const Page: NextPage<PageProps> = ({
       </Head>
       <Header
         navigation={navigation.filter(
-          (item) => !item.redirect?.pathname?.startsWith("/dashboard/")
+          (item) =>
+            !item.redirect?.pathname?.startsWith("/dashboard/") ||
+            item.redirect?.pathname === "/dashboard/profile"
         )}
         showLogin={showLogin}
         showSignUp={showSignUp}
@@ -202,7 +233,7 @@ const Page: NextPage<PageProps> = ({
         showSignUp={showSignUp}
         showLogout={showLogout}
       />
-      {userLoading ? (
+      {showLoading ? (
         <Loading />
       ) : (
         <Content className={className}>{children}</Content>

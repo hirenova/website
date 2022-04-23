@@ -10,8 +10,9 @@ const SignUp = () => {
     <Wrapper
       title="Sign Up"
       showSignUp={false}
-      displayConditionAuthId="not_logged_in"
-      displayConditionProfileTypeId="neither"
+      showFooter={false}
+      displayConditionAuthId="always"
+      displayConditionProfileTypeId="always"
     >
       <SectionSignUp />
     </Wrapper>

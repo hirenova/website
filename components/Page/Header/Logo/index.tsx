@@ -18,7 +18,7 @@ interface LogoProps {
 const Logo = ({ className }: LogoProps) => {
   return (
     <Wrapper href="/">
-      <Image src="header_logo.png" alt="" />
+      <Image src="/header_logo.png" alt="" />
     </Wrapper>
   );
 };

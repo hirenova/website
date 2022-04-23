@@ -10,8 +10,9 @@ const Root = () => {
     <Wrapper
       title="Log in"
       showLogin={false}
-      displayConditionAuthId="not_logged_in"
-      displayConditionProfileTypeId="neither"
+      showFooter={false}
+      displayConditionAuthId="always"
+      displayConditionProfileTypeId="always"
     >
       <SectionLogin />
     </Wrapper>

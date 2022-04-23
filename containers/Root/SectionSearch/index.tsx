@@ -9,7 +9,7 @@ import Postings from "./Postings";
 
 const Wrapper = styled(Section)`
   /* background: linear-gradient(320deg, #d1244c 0%, #487bb4 100%); */
-  background: url("background.png");
+  background: url("/background.png");
   background-size: cover;
   transition: 0.2s;
   color: white;
@@ -31,7 +31,7 @@ const Content = styled(SectionContent)`
   padding: 100px 10%;
   overflow: hidden;
   @media (min-width: 1000px) {
-    background: url("background.png");
+    background: url("/background.png");
     background-size: cover;
     border-radius: 100px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

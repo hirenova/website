@@ -26,7 +26,7 @@ const ButtonAuthProvider = ({
 }: ButtonAuthProviderProps) => {
   const { authWithProvider } = useAuth();
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
+  const onClick: MouseEventHandler<HTMLButtonElement> = async () => {
     await authWithProvider({ authMethodId, authProviderId });
   };
 

@@ -32,7 +32,7 @@ const MenuButton = ({ className }: MenuButtonProps) => {
   return (
     <Wrapper
       className={className}
-      src={sidebarOpen ? "close.webp" : "menu.webp"}
+      src={sidebarOpen ? "/close.webp" : "/menu.webp"}
       onClick={onClick}
     />
   );

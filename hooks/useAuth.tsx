@@ -10,7 +10,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -45,9 +44,10 @@ const useAuth = () => {
   const { setAuthError } = useApp();
 
   const onAuth = async (credential: UserCredential) => {
-    const userDocument = await getDoc(doc(db, "users", credential.user.uid));
-    await updateProfile(credential.user, { displayName: "hello" });
-    if (!userDocument.exists()) {
+    const userDocumentData = await getDoc(
+      doc(db, "users", credential.user.uid)
+    );
+    if (!userDocumentData.exists()) {
       await setDoc(doc(db, "users", credential.user.uid), {});
     }
   };

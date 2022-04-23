@@ -9,13 +9,21 @@ import React, {
   useState,
 } from "react";
 import { AuthStateHook, useAuthState } from "react-firebase-hooks/auth";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import {
+  DocumentDataHook,
+  DocumentHook,
+  useDocument,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 
 export type AuthErrorType = FirebaseError | null;
 
 export type ProfileTypeIdSelected = "candidate" | "employer" | null;
 
+export type UserDocument = {};
+
 export type UserDocumentData = {
+  profileTypeIdSelected?: ProfileTypeIdSelected;
   candidate?: {
     resume: string;
     description: { head: string; body: string };
@@ -27,7 +35,11 @@ export interface AppContextValue {
   user: AuthStateHook[0];
   userLoading: AuthStateHook[1];
   userError: AuthStateHook[2];
-  userDocument: UserDocumentData | undefined;
+  userDocument: DocumentHook[0];
+  userDocumentLoading: DocumentHook[1];
+  userDocumentError: DocumentHook[2];
+  userDocumentData: UserDocumentData | undefined;
+  userDocumentDataLoading: DocumentDataHook[1];
   authLoading: boolean;
   authError: AuthErrorType;
   sidebarOpen: boolean;
@@ -43,6 +55,10 @@ const InitialAppContextValue: AppContextValue = {
   userLoading: true,
   userError: undefined,
   userDocument: undefined,
+  userDocumentLoading: true,
+  userDocumentError: undefined,
+  userDocumentData: undefined,
+  userDocumentDataLoading: true,
   authLoading: false,
   authError: null,
   sidebarOpen: false,
@@ -78,14 +94,20 @@ const AppProvider = ({ children }: AppProviderProps) => {
   >(InitialAppContextValue["profileTypeIdSelected"]);
 
   const [userDocument, userDocumentLoading, userDocumentError] =
+    useDocument<UserDocument>(doc(db, "users", String(user?.uid)));
+
+  const [userDocumentData, userDocumentDataLoading, userDocumentDataError] =
     useDocumentData<UserDocumentData>(doc(db, "users", String(user?.uid)));
 
   useEffect(() => {
-    if (!userDocument) return;
-    if (userDocument.candidate) return setProfileTypeIdSelected("candidate");
-    if (userDocument.employer) return setProfileTypeIdSelected("employer");
+    if (!userDocumentData) return setProfileTypeIdSelected(null);
+    if (userDocumentData.profileTypeIdSelected)
+      return setProfileTypeIdSelected(userDocumentData.profileTypeIdSelected);
+    if (userDocumentData.candidate)
+      return setProfileTypeIdSelected("candidate");
+    if (userDocumentData.employer) return setProfileTypeIdSelected("employer");
     setProfileTypeIdSelected(null);
-  }, [userDocument]);
+  }, [userDocumentData]);
 
   return (
     <AppContext.Provider
@@ -94,6 +116,10 @@ const AppProvider = ({ children }: AppProviderProps) => {
         userLoading,
         userError,
         userDocument,
+        userDocumentLoading,
+        userDocumentError,
+        userDocumentData,
+        userDocumentDataLoading,
         authLoading,
         authError,
         sidebarOpen,

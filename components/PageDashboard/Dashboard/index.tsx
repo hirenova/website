@@ -1,5 +1,4 @@
 import { BoxProps } from "components/Box";
-import Heading from "components/Heading";
 import Section from "components/Section";
 import styled from "styled-components";
 
@@ -16,11 +15,11 @@ const Wrapper = styled(Section)`
 
 interface DashboardProps extends BoxProps {}
 
-const Dashboard = ({ className, ...props }: DashboardProps) => {
+const Dashboard = ({ className, children, ...props }: DashboardProps) => {
   return (
     <Wrapper className={className} label="Dashboard" {...props}>
       <Sidebar />
-      <Content />
+      <Content>{children}</Content>
     </Wrapper>
   );
 };

@@ -3,7 +3,7 @@ import {
   HeadingProps as ChakraHeadingProps,
 } from "@chakra-ui/react";
 
-interface HeadingProps extends ChakraHeadingProps {}
+export interface HeadingProps extends ChakraHeadingProps {}
 
 const Heading = ({ ...props }: HeadingProps) => {
   return <ChakraHeading {...props} />;

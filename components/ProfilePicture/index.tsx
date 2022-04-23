@@ -14,7 +14,7 @@ const ProfilePicture = ({ className, ...props }: ProfilePictureProps) => {
     <Wrapper
       className={className}
       as="img"
-      src={user?.photoURL || "profile_picture_default.png"}
+      src={user?.photoURL || "/profile_picture_default.png"}
       referrerPolicy="no-referrer"
       {...props}
     ></Wrapper>

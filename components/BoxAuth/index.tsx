@@ -57,7 +57,7 @@ const SeparatorLine = styled.div`
 `;
 
 const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
-  const { authError, user } = useApp();
+  const { authError, user, userDocumentData } = useApp();
 
   const toast = useToast();
 
@@ -85,9 +85,11 @@ const BoxAuth = ({ className, authMethodId }: BoxAuthProps) => {
   }, [toast, authError]);
 
   useEffect(() => {
-    if (user)
-      router.push({ pathname: router.query?.path?.toString() || "/dashboard" });
-  }, [router, user]);
+    if (user && userDocumentData)
+      router.push({
+        pathname: router.query?.path?.toString() || "/dashboard/profile",
+      });
+  }, [router, user, userDocumentData]);
 
   return (
     <Wrapper className={className}>
