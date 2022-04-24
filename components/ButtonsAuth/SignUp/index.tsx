@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Wrapper = styled(Button)``;
 
-interface SignUpProps extends ButtonProps {}
+interface SignUpProps extends Partial<ButtonProps> {}
 
 const SignUp = ({ className, ...props }: SignUpProps) => {
   const router = useRouter();

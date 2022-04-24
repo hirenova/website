@@ -21,6 +21,8 @@
     "react-dom": "17.0.2",
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.3.1",
+    "slate": "^0.77.2",
+    "slate-react": "^0.77.3",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

@@ -1,15 +1,17 @@
+import Box, { BoxProps } from "components/Box";
+import useApp from "hooks/useApp";
 import styled from "styled-components";
 
-const Wrapper = styled.span`
-  /* color: #3169ad; */
+const Wrapper = styled(Box)`
+  display: inline;
 `;
 
-interface CountProps {
-  className?: string;
-}
+interface CountProps extends BoxProps {}
 
 const Count = ({ className }: CountProps) => {
-  return <Wrapper className={className}>93,178</Wrapper>;
+  const { jobsCollectionData } = useApp();
+
+  return <Wrapper className={className}>{jobsCollectionData?.length}</Wrapper>;
 };
 
 export default Count;

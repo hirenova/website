@@ -7,11 +7,9 @@ import styled, { css } from "styled-components";
 
 const Wrapper = styled(Button)``;
 
-interface LogoutProps {
-  className?: string;
-}
+interface LogoutProps extends Partial<ButtonProps> {}
 
-const Logout = ({ className }: LogoutProps) => {
+const Logout = ({ className, ...props }: LogoutProps) => {
   const router = useRouter();
 
   const { logout } = useAuth();
@@ -21,7 +19,7 @@ const Logout = ({ className }: LogoutProps) => {
   };
 
   return (
-    <Wrapper className={className} onClick={onClick}>
+    <Wrapper className={className} onClick={onClick} {...props}>
       Log out
     </Wrapper>
   );

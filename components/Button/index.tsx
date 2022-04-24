@@ -12,6 +12,7 @@ const Wrapper = styled(ButtonChakra)``;
 
 export interface ButtonProps extends ButtonChakraProps {
   redirect?: UrlObject;
+  children: React.ReactNode;
 }
 
 const Button = ({ className, redirect, onClick, ...props }: ButtonProps) => {

@@ -1,7 +1,11 @@
 import { FormEventHandler } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.form``;
+const Wrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
 
 export interface FormProps {
   className?: string;

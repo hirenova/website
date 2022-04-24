@@ -9,8 +9,7 @@ const Wrapper = styled(Section)`
   display: flex;
   gap: 40px;
   padding: 40px;
-  background: #f5f7fc;
-  height: calc(100vh - 80px);
+  /* height: calc(100vh - 80px); */
 `;
 
 interface DashboardProps extends BoxProps {}

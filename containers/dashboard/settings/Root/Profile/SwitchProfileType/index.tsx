@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const Wrapper = styled(Button)``;
 
-interface SwitchProfileTypeProps extends ButtonProps {}
+interface SwitchProfileTypeProps extends Partial<ButtonProps> {}
 
 const SwitchProfileType = ({}: SwitchProfileTypeProps) => {
   const { profileTypeIdSelected, userDocument } = useApp();

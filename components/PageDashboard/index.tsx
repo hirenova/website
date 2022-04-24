@@ -7,6 +7,8 @@ import ProfileType from "./ProfileType";
 
 const Wrapper = styled(Page)`
   margin-top: 80px;
+  background: #f5f7fc;
+  min-height: calc(100vh - 80px);
 `;
 
 interface PageDashboardProps

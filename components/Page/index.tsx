@@ -180,7 +180,7 @@ const Page: NextPage<PageProps> = ({
   }, [userLoading, displayConditionAuthId, user, router]);
 
   useEffect(() => {
-    if (userDocumentDataLoading) return;
+    if (userDocumentDataLoading || profileTypeIdSelected === undefined) return;
 
     const accept = acceptProfileType(
       displayConditionProfileTypeId,
@@ -206,6 +206,7 @@ const Page: NextPage<PageProps> = ({
   const showLoading =
     userLoading ||
     userDocumentDataLoading ||
+    profileTypeIdSelected === undefined ||
     !acceptLogin(displayConditionAuthId, user) ||
     !acceptProfileType(displayConditionProfileTypeId, profileTypeIdSelected);
 

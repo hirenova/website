@@ -15,7 +15,7 @@ const ProviderLabel = styled.span`
 `;
 
 export interface ButtonAuthProviderProps
-  extends ButtonProps,
+  extends Partial<ButtonProps>,
     AuthWithProviderParams {}
 
 const ButtonAuthProvider = ({

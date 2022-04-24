@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 const Wrapper = styled(Box)`
   flex: 1;
+  /* overflow: auto; */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 interface ContentProps extends BoxProps {}

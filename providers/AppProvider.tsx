@@ -1,6 +1,6 @@
 import { auth, db } from "config/firebase";
 import { FirebaseError } from "firebase/app";
-import { doc } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import React, {
   Dispatch,
   SetStateAction,
@@ -10,17 +10,17 @@ import React, {
 } from "react";
 import { AuthStateHook, useAuthState } from "react-firebase-hooks/auth";
 import {
+  CollectionDataHook,
   DocumentDataHook,
   DocumentHook,
+  useCollectionData,
   useDocument,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 
 export type AuthErrorType = FirebaseError | null;
 
-export type ProfileTypeIdSelected = "candidate" | "employer" | null;
-
-export type UserDocument = {};
+export type ProfileTypeIdSelected = "candidate" | "employer" | null | undefined;
 
 export type UserDocumentData = {
   profileTypeIdSelected?: ProfileTypeIdSelected;
@@ -31,6 +31,14 @@ export type UserDocumentData = {
   employer?: { company: string };
 };
 
+export type JobDocumentData = {
+  creator?: string;
+  title?: string;
+  description?: string;
+  deadline?: Date;
+  company?: string;
+};
+
 export interface AppContextValue {
   user: AuthStateHook[0];
   userLoading: AuthStateHook[1];
@@ -39,7 +47,10 @@ export interface AppContextValue {
   userDocumentLoading: DocumentHook[1];
   userDocumentError: DocumentHook[2];
   userDocumentData: UserDocumentData | undefined;
-  userDocumentDataLoading: DocumentDataHook[1];
+  userDocumentDataLoading: DocumentDataHook<UserDocumentData>[1];
+  jobsCollectionData: CollectionDataHook<JobDocumentData>[0];
+  jobsCollectionLoading: CollectionDataHook<JobDocumentData>[1];
+  jobsCollectionError: CollectionDataHook<JobDocumentData>[2];
   authLoading: boolean;
   authError: AuthErrorType;
   sidebarOpen: boolean;
@@ -59,10 +70,13 @@ const InitialAppContextValue: AppContextValue = {
   userDocumentError: undefined,
   userDocumentData: undefined,
   userDocumentDataLoading: true,
+  jobsCollectionData: undefined,
+  jobsCollectionLoading: true,
+  jobsCollectionError: undefined,
   authLoading: false,
   authError: null,
   sidebarOpen: false,
-  profileTypeIdSelected: null,
+  profileTypeIdSelected: undefined,
   setAuthError: () => {},
   setAuthLoading: () => {},
   setSidebarOpen: () => {},
@@ -94,20 +108,24 @@ const AppProvider = ({ children }: AppProviderProps) => {
   >(InitialAppContextValue["profileTypeIdSelected"]);
 
   const [userDocument, userDocumentLoading, userDocumentError] =
-    useDocument<UserDocument>(doc(db, "users", String(user?.uid)));
+    useDocument<UserDocumentData>(doc(db, "users", String(user?.uid)));
 
   const [userDocumentData, userDocumentDataLoading, userDocumentDataError] =
     useDocumentData<UserDocumentData>(doc(db, "users", String(user?.uid)));
 
+  const [jobsCollectionData, jobsCollectionLoading, jobsCollectionError] =
+    useCollectionData<JobDocumentData>(collection(db, "jobs"));
+
   useEffect(() => {
-    if (!userDocumentData) return setProfileTypeIdSelected(null);
+    if (userDocumentLoading || !userDocumentData)
+      return setProfileTypeIdSelected(undefined);
     if (userDocumentData.profileTypeIdSelected)
       return setProfileTypeIdSelected(userDocumentData.profileTypeIdSelected);
     if (userDocumentData.candidate)
       return setProfileTypeIdSelected("candidate");
     if (userDocumentData.employer) return setProfileTypeIdSelected("employer");
     setProfileTypeIdSelected(null);
-  }, [userDocumentData]);
+  }, [userDocumentData, userDocumentLoading]);
 
   return (
     <AppContext.Provider
@@ -120,6 +138,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
         userDocumentError,
         userDocumentData,
         userDocumentDataLoading,
+        jobsCollectionData,
+        jobsCollectionLoading,
+        jobsCollectionError,
         authLoading,
         authError,
         sidebarOpen,
