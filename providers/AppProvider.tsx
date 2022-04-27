@@ -1,3 +1,6 @@
+import { JobTypeIdType } from "components/CardJob/JobType";
+import { PayAmountType } from "components/PayAmount";
+import { PayPeriodIdType } from "components/PayPeriod";
 import { auth, db } from "config/firebase";
 import { FirebaseError } from "firebase/app";
 import { collection, doc } from "firebase/firestore";
@@ -37,6 +40,10 @@ export type JobDocumentData = {
   description?: string;
   deadline?: Date;
   company?: string;
+  location?: string;
+  typeId?: JobTypeIdType;
+  payAmount?: PayAmountType;
+  payPeriodId?: PayPeriodIdType;
 };
 
 export interface AppContextValue {
