@@ -154,10 +154,15 @@ const Page: NextPage<PageProps> = ({
 }: PageProps) => {
   const router = useRouter();
 
-  const { user, userLoading, userDocumentDataLoading, profileTypeIdSelected } =
-    useApp();
-
-  const { sidebarOpen, setSidebarOpen, userDocumentData } = useApp();
+  const {
+    user,
+    userLoading,
+    userDocumentDataLoading,
+    profileTypeIdSelected,
+    userDocumentData,
+    sidebarOpen,
+    setSidebarOpen,
+  } = useApp();
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -206,7 +211,7 @@ const Page: NextPage<PageProps> = ({
   const showLoading =
     userLoading ||
     userDocumentDataLoading ||
-    profileTypeIdSelected === undefined ||
+    (userDocumentData && profileTypeIdSelected === undefined) ||
     !acceptLogin(displayConditionAuthId, user) ||
     !acceptProfileType(displayConditionProfileTypeId, profileTypeIdSelected);
 

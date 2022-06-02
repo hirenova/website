@@ -124,7 +124,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
     useCollectionData<JobDocumentData>(collection(db, "jobs"));
 
   useEffect(() => {
-    if (userDocumentLoading || !userDocumentData)
+    if (userDocumentLoading || userDocumentDataLoading || !userDocumentData)
       return setProfileTypeIdSelected(undefined);
     if (userDocumentData.profileTypeIdSelected)
       return setProfileTypeIdSelected(userDocumentData.profileTypeIdSelected);
