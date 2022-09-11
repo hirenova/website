@@ -1,16 +1,14 @@
-import Card from "components/Card";
-import Section from "components/Section";
-import SectionContent from "components/SectionContent";
-import SectionLabel from "components/SectionLabel";
-import styled from "styled-components";
+import Card from "components/Card"
+import Section from "components/Section"
+import SectionContent from "components/SectionContent"
+import SectionLabel from "components/SectionLabel"
+import styled from "styled-components"
 
-import SwitchProfileType from "./SwitchProfileType";
+import SwitchProfileType from "./SwitchProfileType"
 
-const Wrapper = styled(Section)``;
+const Wrapper = styled(Section)``
 
-interface ProfileProps {}
-
-const Profile = ({}: ProfileProps) => {
+const Profile = () => {
   return (
     <Wrapper as={Card}>
       <SectionLabel>Profile settings</SectionLabel>
@@ -18,7 +16,7 @@ const Profile = ({}: ProfileProps) => {
         <SwitchProfileType />
       </SectionContent>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

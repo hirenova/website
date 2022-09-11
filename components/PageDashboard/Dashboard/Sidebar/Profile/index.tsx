@@ -1,9 +1,9 @@
-import Box, { BoxProps } from "components/Box";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import styled from "styled-components"
 
-import ProfilePicture from "./ProfilePicture";
+import ProfilePicture from "./ProfilePicture"
 
-const Wrapper = styled(Box)``;
+const Wrapper = styled(Box)``
 
 interface ProfileProps extends BoxProps {}
 
@@ -12,7 +12,7 @@ const Profile = ({ className, ...props }: ProfileProps) => {
     <Wrapper className={className} {...props}>
       <ProfilePicture />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

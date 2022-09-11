@@ -1,8 +1,8 @@
-import Page from "components/Page";
-import Section from "components/Section";
-import styled from "styled-components";
+import Page from "components/Page"
+import Section from "components/Section"
+import styled from "styled-components"
 
-const Wrapper = styled(Page)``;
+const Wrapper = styled(Page)``
 
 const About = () => {
   return (
@@ -13,7 +13,7 @@ const About = () => {
     >
       <Section label="About">About</Section>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default About;
+export default About

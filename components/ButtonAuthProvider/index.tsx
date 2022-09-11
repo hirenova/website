@@ -1,22 +1,37 @@
-import Button, { ButtonProps } from "components/Button";
-import useAuth, { AuthWithProviderParams } from "hooks/useAuth";
-import { MouseEventHandler } from "react";
-import { FaFacebook, FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
-import styled from "styled-components";
+import Button, { ButtonProps } from "components/Button"
+import useAuth, { AuthProviderId } from "hooks/useAuth"
+import { FaGithub, FaGoogle, FaLinkedin } from "react-icons/fa"
+import styled from "styled-components"
 
-const Wrapper = styled(Button)``;
+const Wrapper = styled(Button)``
 
 const MethodLabel = styled.span`
   margin-left: 5px;
-`;
+`
 
 const ProviderLabel = styled.span`
   margin-right: auto;
-`;
+`
 
-export interface ButtonAuthProviderProps
-  extends Partial<ButtonProps>,
-    AuthWithProviderParams {}
+export type AuthMethodId = "login" | "sign_up"
+
+interface ButtonAuthProviderProps extends Partial<ButtonProps> {
+  authProviderId: AuthProviderId
+  authMethodId: AuthMethodId
+}
+
+const authProviderSettings: {
+  [key in AuthProviderId]: { label: string; icon: JSX.Element }
+} = {
+  google: { label: "Google", icon: <FaGoogle /> },
+  github: { label: "GitHub", icon: <FaGithub /> },
+  linkedin: { label: "LinkedIn", icon: <FaLinkedin /> },
+}
+
+const authMethodSettings: { [key in AuthMethodId]: { label: string } } = {
+  login: { label: "Log in with" },
+  sign_up: { label: "Sign up with" },
+}
 
 const ButtonAuthProvider = ({
   className,
@@ -24,24 +39,11 @@ const ButtonAuthProvider = ({
   authMethodId,
   ...props
 }: ButtonAuthProviderProps) => {
-  const { authWithProvider } = useAuth();
-
-  const onClick: MouseEventHandler<HTMLButtonElement> = async () => {
-    await authWithProvider({ authMethodId, authProviderId });
-  };
-
-  const authProviderSettings = {
-    google: { label: "Google", icon: <FaGoogle /> },
-    facebook: { label: "Facebook", icon: <FaFacebook /> },
-    github: { label: "GitHub", icon: <FaGithub /> },
-    microsoft: { label: "Microsoft", icon: <FaMicrosoft /> },
-  };
-
-  const authMethodSettings = {
-    login: { label: "Log in with" },
-    sign_up: { label: "Sign up with" },
-  };
-
+  const { login } = useAuth()
+  const onClick = async () => {
+    if (authMethodId === "sign_up") await login({ provider: authProviderId })
+    if (authMethodId === "login") await login({ provider: authProviderId })
+  }
   return (
     <Wrapper
       className={className}
@@ -55,7 +57,7 @@ const ButtonAuthProvider = ({
         {authProviderSettings[authProviderId].label}
       </ProviderLabel>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ButtonAuthProvider;
+export default ButtonAuthProvider

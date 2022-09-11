@@ -1,38 +1,34 @@
+import { User } from "@supabase/supabase-js"
+import Profile from "models/profile"
 import {
   DisplayConditionAuthId,
   DisplayConditionProfileTypeId,
-} from "components/ButtonNavigation";
-import { User } from "firebase/auth";
-import { ProfileTypeIdSelected } from "providers/AppProvider";
+} from "navigation"
 
 interface EncodeURIComponentsParams {
-  [name: string]: string;
+  [name: string]: string
 }
 
 export const encodeURIComponents = (
   params: EncodeURIComponentsParams
 ): string => {
   const queryString = Object.entries(params)
-    .filter(([key, value]) => value !== "")
+    .filter(([, value]) => value !== "")
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-    .join("&");
-  return queryString;
-};
+    .join("&")
+  return queryString
+}
 
 export const encodeURIAll = (
   directory: string,
   params: EncodeURIComponentsParams | string
 ): string => {
   if (typeof params !== "string") {
-    params = encodeURIComponents(params);
-    if (params === "") return directory;
+    params = encodeURIComponents(params)
+    if (params === "") return directory
   }
-  return `${directory}?${params}`;
-};
-
-export const redirectLogin = () => {};
-
-export const redirectSignUp = () => {};
+  return `${directory}?${params}`
+}
 
 export const acceptLogin = (
   displayConditionAuthId: DisplayConditionAuthId,
@@ -42,26 +38,28 @@ export const acceptLogin = (
     displayConditionAuthId === "always" ||
       (displayConditionAuthId === "logged_in" && user) ||
       (displayConditionAuthId === "not_logged_in" && !user)
-  );
-  return accept;
-};
+  )
+  return accept
+}
 
 export const acceptProfileType = (
   displayConditionProfileTypeId: DisplayConditionProfileTypeId,
-  profileTypeIdSelected: ProfileTypeIdSelected
+  activeProfileType: Profile["activeProfileType"] | null | undefined
 ): boolean => {
-  const accept = Boolean(
-    (displayConditionProfileTypeId === "candidate" &&
-      profileTypeIdSelected === "candidate") ||
-      (displayConditionProfileTypeId === "employer" &&
-        profileTypeIdSelected === "employer") ||
-      displayConditionProfileTypeId === "always" ||
-      (displayConditionProfileTypeId === "either" &&
-        typeof profileTypeIdSelected === "string" &&
-        ["candidate", "employer"].includes(profileTypeIdSelected)) ||
-      (displayConditionProfileTypeId === "neither" &&
-        profileTypeIdSelected === null)
-  );
-
-  return accept;
-};
+  if (displayConditionProfileTypeId === "always") return true
+  if (
+    displayConditionProfileTypeId === "candidate" &&
+    activeProfileType === "CANDIDATE"
+  )
+    return true
+  if (
+    displayConditionProfileTypeId === "employer" &&
+    activeProfileType === "EMPLOYER"
+  )
+    return true
+  if (displayConditionProfileTypeId === "either" && activeProfileType)
+    return true
+  if (displayConditionProfileTypeId === "neither" && activeProfileType === null)
+    return true
+  return false
+}

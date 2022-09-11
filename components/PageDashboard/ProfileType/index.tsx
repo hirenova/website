@@ -1,9 +1,8 @@
-import { BoxProps } from "components/Box";
-import Heading from "components/Heading";
-import Section from "components/Section";
-import styled from "styled-components";
+import Heading from "components/Heading"
+import Section from "components/Section"
+import styled from "styled-components"
 
-import Options from "./Options";
+import Options from "./Options"
 
 const Wrapper = styled(Section)`
   display: flex;
@@ -12,10 +11,10 @@ const Wrapper = styled(Section)`
   flex: 1;
   align-items: center;
   padding: 20px;
-`;
+`
 
 interface ProfileTypeProps {
-  className?: string;
+  className?: string
 }
 
 const ProfileType = ({ className }: ProfileTypeProps) => {
@@ -26,7 +25,7 @@ const ProfileType = ({ className }: ProfileTypeProps) => {
       </Heading>
       <Options />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ProfileType;
+export default ProfileType

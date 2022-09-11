@@ -1,11 +1,11 @@
-import Page from "components/Page";
-import PageDashboard from "components/PageDashboard";
-import styled from "styled-components";
+import Page from "components/Page"
+import PageDashboard from "components/PageDashboard"
+import styled from "styled-components"
 
-const Wrapper = styled(PageDashboard)``;
+const Wrapper = styled(PageDashboard)``
 
 interface RootProps {
-  className?: string;
+  className?: string
 }
 
 const Root = ({ className }: RootProps) => {
@@ -13,7 +13,7 @@ const Root = ({ className }: RootProps) => {
     <Wrapper className={className} displayConditionProfileTypeId="always">
       Profile
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Root;
+export default Root

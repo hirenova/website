@@ -1,30 +1,43 @@
-import Button, { ButtonProps } from "components/Button";
-import { updateDoc } from "firebase/firestore";
-import useApp from "hooks/useApp";
-import { ProfileTypeIdSelected, UserDocumentData } from "providers/AppProvider";
-import { MouseEventHandler } from "react";
-import styled from "styled-components";
+import Button, { ButtonProps } from "components/Button"
+import write from "database/write"
+import useAuth from "hooks/useAuth"
+import Profile from "models/profile"
+import { MouseEventHandler } from "react"
+import styled from "styled-components"
 
-const Wrapper = styled(Button)``;
+const Wrapper = styled(Button)``
 
 interface SwitchProfileTypeProps extends Partial<ButtonProps> {}
 
-const SwitchProfileType = ({}: SwitchProfileTypeProps) => {
-  const { profileTypeIdSelected, userDocument } = useApp();
+const SwitchProfileType = ({ ...props }: SwitchProfileTypeProps) => {
+  const { profile, refreshProfile } = useAuth()
 
-  const profileTypeIdOther: ProfileTypeIdSelected =
-    profileTypeIdSelected == "candidate" ? "employer" : "candidate";
+  if (!profile) return null
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = () => {
-    if (userDocument)
-      updateDoc<UserDocumentData>(userDocument.ref, {
-        profileTypeIdSelected: profileTypeIdOther,
-      });
-  };
+  const newProfileTypes: {
+    [key in Profile["activeProfileType"]]: {
+      id: Profile["activeProfileType"]
+      title: string
+    }
+  } = {
+    CANDIDATE: { id: "EMPLOYER", title: "employer" },
+    EMPLOYER: { id: "CANDIDATE", title: "candidate" },
+  }
+
+  const newProfileType = newProfileTypes[profile.activeProfileType]
+
+  const onClick: MouseEventHandler<HTMLButtonElement> = async () => {
+    if (profile) {
+      await write.activateProfileType(profile?.id, newProfileType.id)
+      await refreshProfile()
+    }
+  }
 
   return (
-    <Wrapper onClick={onClick}>Switch to {profileTypeIdOther} profile</Wrapper>
-  );
-};
+    <Wrapper onClick={onClick} {...props}>
+      Switch to {newProfileType.title} profile
+    </Wrapper>
+  )
+}
 
-export default SwitchProfileType;
+export default SwitchProfileType

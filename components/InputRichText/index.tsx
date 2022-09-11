@@ -1,42 +1,36 @@
-import { useMemo, useState } from "react";
-import { BaseEditor, Descendant, createEditor } from "slate";
-import { Editable, ReactEditor, Slate, withReact } from "slate-react";
-import { EditableProps } from "slate-react/dist/components/editable";
-import styled from "styled-components";
+import { useState } from "react"
+import { BaseEditor, Descendant, createEditor } from "slate"
+import { Editable, ReactEditor, Slate, withReact } from "slate-react"
 
-// const Wrapper = styled(Box)``;
-
-type CustomElement = { type: "paragraph"; children: CustomText[] };
-type CustomText = { text: string };
+type CustomElement = { type: "paragraph"; children: CustomText[] }
+type CustomText = { text: string }
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor;
-    Element: CustomElement;
-    Text: CustomText;
+    Editor: BaseEditor & ReactEditor
+    Element: CustomElement
+    Text: CustomText
   }
 }
 
-interface InputRichTextProps {}
-
-const InputRichText = ({}: InputRichTextProps) => {
-  const [editor] = useState(() => withReact(createEditor()));
+const InputRichText = () => {
+  const [editor] = useState(() => withReact(createEditor()))
 
   const [value, setValue] = useState<Descendant[]>([
     {
       type: "paragraph",
       children: [{ text: "A line of text in a paragraph." }],
     },
-  ]);
+  ])
 
   return (
     <Slate editor={editor} value={value} onChange={setValue}>
       <Editable />
     </Slate>
-  );
-};
+  )
+}
 
-export default InputRichText;
+export default InputRichText
 
 // import "draft-js/dist/Draft.css";
 

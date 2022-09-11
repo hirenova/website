@@ -1,17 +1,27 @@
-import Box, { BoxProps } from "components/Box";
-import useApp from "hooks/useApp";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import Spinner from "components/Spinner"
+import read from "database/read"
+import { useEffect, useState } from "react"
+import styled from "styled-components"
 
 const Wrapper = styled(Box)`
   display: inline;
-`;
+`
 
 interface CountProps extends BoxProps {}
 
 const Count = ({ className }: CountProps) => {
-  const { jobsCollectionData } = useApp();
+  const [count, setCount] = useState<number>()
 
-  return <Wrapper className={className}>{jobsCollectionData?.length}</Wrapper>;
-};
+  useEffect(() => {
+    const getCount = async () => {
+      const count = await read.jobCount()
+      setCount(count)
+    }
+    getCount()
+  }, [])
 
-export default Count;
+  return <Wrapper className={className}>{count ? count : <Spinner />}</Wrapper>
+}
+
+export default Count

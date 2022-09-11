@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div``
 
 interface MessageProps {
-  className: string;
+  className: string
 }
 
 const Message = ({ className }: MessageProps) => {
-  return <Wrapper className={className}>Message</Wrapper>;
-};
+  return <Wrapper className={className}>Message</Wrapper>
+}
 
-export default Message;
+export default Message

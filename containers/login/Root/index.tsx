@@ -1,9 +1,9 @@
-import Page from "components/Page";
-import styled from "styled-components";
+import Page from "components/Page"
+import styled from "styled-components"
 
-import SectionLogin from "./SectionLogin";
+import SectionLogin from "./SectionLogin"
 
-const Wrapper = styled(Page)``;
+const Wrapper = styled(Page)``
 
 const Root = () => {
   return (
@@ -11,12 +11,12 @@ const Root = () => {
       title="Log in"
       showLogin={false}
       showFooter={false}
-      displayConditionAuthId="always"
+      displayConditionAuthId="not_logged_in"
       displayConditionProfileTypeId="always"
     >
       <SectionLogin />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Root;
+export default Root

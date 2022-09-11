@@ -1,7 +1,7 @@
 // import Button from "components/Button";
 
-import { Button } from "@chakra-ui/react";
-import styled from "styled-components";
+import { Button } from "@chakra-ui/react"
+import styled from "styled-components"
 
 const Wrapper = styled(Button)`
   background: #3169ad;
@@ -18,10 +18,10 @@ const Wrapper = styled(Button)`
   @media (max-width: 1000px) {
     width: 100%;
   }
-`;
+`
 
 interface SubmitButtonProps {
-  className?: string;
+  className?: string
 }
 
 const SubmitButton = ({ className, ...props }: SubmitButtonProps) => {
@@ -29,7 +29,7 @@ const SubmitButton = ({ className, ...props }: SubmitButtonProps) => {
     <Wrapper className={className} type="submit" {...props}>
       Search
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SubmitButton;
+export default SubmitButton

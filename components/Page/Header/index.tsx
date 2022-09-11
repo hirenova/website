@@ -1,13 +1,11 @@
-import Box, { BoxProps } from "components/Box";
-import { BoxNavigationProps } from "components/BoxNavigation";
-import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth"
+import { Navigation } from "navigation"
+import styled from "styled-components"
 
-import Logo from "./Logo";
-import MenuButton from "./MenuButton";
-import MenuItems from "./MenuItems";
-
-// import AuthButtons from "./AuthButtons";
+import Logo from "./Logo"
+import MenuButton from "./MenuButton"
+import MenuItems from "./MenuItems"
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -22,19 +20,18 @@ const Wrapper = styled(Box)`
   gap: 100px;
   box-shadow: 0 5px 15px rgb(64 79 104 / 5%);
   z-index: 11;
-`;
+`
 
 const ButtonsAuthResponsive = styled(ButtonsAuth)`
   margin-left: auto;
   @media (max-width: 1300px) {
     display: none;
   }
-`;
+`
 
-export interface HeaderProps
-  extends BoxProps,
-    Pick<BoxNavigationProps, "navigation">,
-    ButtonsAuthProps {}
+export interface HeaderProps extends BoxProps, ButtonsAuthProps {
+  navigation: Navigation
+}
 
 const Header = ({
   className,
@@ -55,7 +52,7 @@ const Header = ({
       />
       <MenuButton />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -1,10 +1,10 @@
 import {
   InputGroup as ChakraInputGroup,
   InputGroupProps as ChakraInputGroupProps,
-} from "@chakra-ui/react";
-import styled from "styled-components";
+} from "@chakra-ui/react"
+import styled from "styled-components"
 
-const Wrapper = styled(ChakraInputGroup)``;
+const Wrapper = styled(ChakraInputGroup)``
 
 interface InputGroupProps extends ChakraInputGroupProps {}
 
@@ -13,7 +13,7 @@ const InputGroup = ({ className, children, ...props }: InputGroupProps) => {
     <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default InputGroup;
+export default InputGroup

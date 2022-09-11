@@ -1,8 +1,8 @@
-import Page from "components/Page";
-import Section from "components/Section";
-import styled from "styled-components";
+import Page from "components/Page"
+import Section from "components/Section"
+import styled from "styled-components"
 
-const Wrapper = styled(Page)``;
+const Wrapper = styled(Page)``
 
 const Candidates = () => {
   return (
@@ -13,7 +13,7 @@ const Candidates = () => {
     >
       <Section label="Candidates">Candidates</Section>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Candidates;
+export default Candidates

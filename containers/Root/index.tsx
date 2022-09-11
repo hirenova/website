@@ -1,9 +1,9 @@
-import Page from "components/Page";
-import styled from "styled-components";
+import Page from "components/Page"
+import styled from "styled-components"
 
-import SectionSearch from "./SectionSearch";
+import SectionSearch from "./SectionSearch"
 
-const Wrapper = styled(Page)``;
+const Wrapper = styled(Page)``
 
 const Root = () => {
   return (
@@ -14,7 +14,7 @@ const Root = () => {
     >
       <SectionSearch />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Root;
+export default Root

@@ -1,1 +1,1 @@
-export { default } from "containers/jobs/Root";
+export { default } from "containers/jobs/Root"

@@ -1,11 +1,11 @@
-import Section from "components/Section";
-import SectionContent from "components/SectionContent";
-import styled from "styled-components";
+import Section from "components/Section"
+import SectionContent from "components/SectionContent"
+import styled from "styled-components"
 
-import Form from "./Form";
-import Hint from "./Hint";
-import Insights from "./Insights";
-import Postings from "./Postings";
+import Form from "./Form"
+import Hint from "./Hint"
+import Insights from "./Insights"
+import Postings from "./Postings"
 
 const Wrapper = styled(Section)`
   /* background: linear-gradient(320deg, #d1244c 0%, #487bb4 100%); */
@@ -19,7 +19,7 @@ const Wrapper = styled(Section)`
     padding: 5%;
     padding-top: calc(80px + 5%);
   }
-`;
+`
 
 const Content = styled(SectionContent)`
   display: flex;
@@ -36,10 +36,10 @@ const Content = styled(SectionContent)`
     border-radius: 100px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
-`;
+`
 
 interface SectionSearchProps {
-  className?: string;
+  className?: string
 }
 
 const SectionSearch = ({ className }: SectionSearchProps) => {
@@ -52,7 +52,7 @@ const SectionSearch = ({ className }: SectionSearchProps) => {
         <Insights />
       </Content>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SectionSearch;
+export default SectionSearch

@@ -1,16 +1,16 @@
-import Box, { BoxProps } from "components/Box";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import styled from "styled-components"
 
-const Wrapper = styled(Box)``;
+const Wrapper = styled(Box)``
 
-interface FieldProps extends BoxProps {}
+export interface FieldProps extends BoxProps {}
 
 const Field = ({ className, children, ...props }: FieldProps) => {
   return (
     <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Field;
+export default Field

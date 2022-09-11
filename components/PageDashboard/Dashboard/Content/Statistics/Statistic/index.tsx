@@ -1,5 +1,5 @@
-import Card, { CardProps } from "components/Card";
-import styled from "styled-components";
+import Card, { CardProps } from "components/Card"
+import styled from "styled-components"
 
 const Wrapper = styled(Card)`
   display: grid;
@@ -9,7 +9,7 @@ const Wrapper = styled(Card)`
   justify-items: right;
   align-items: center;
   padding: 20px;
-`;
+`
 
 interface StatisticProps extends CardProps {}
 
@@ -18,7 +18,7 @@ const Statistic = ({ className, children, ...props }: StatisticProps) => {
     <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Statistic;
+export default Statistic

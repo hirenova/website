@@ -1,7 +1,7 @@
-import Box, { BoxProps } from "components/Box";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import styled from "styled-components"
 
-const Wrapper = styled(Box)``;
+const Wrapper = styled(Box)``
 
 interface SectionContentProps extends BoxProps {}
 
@@ -14,7 +14,7 @@ const SectionContent = ({
     <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SectionContent;
+export default SectionContent

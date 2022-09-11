@@ -1,9 +1,9 @@
-import Page from "components/Page";
-import styled from "styled-components";
+import Page from "components/Page"
+import styled from "styled-components"
 
-import SectionSignUp from "./SectionSignUp";
+import SectionSignUp from "./SectionSignUp"
 
-const Wrapper = styled(Page)``;
+const Wrapper = styled(Page)``
 
 const SignUp = () => {
   return (
@@ -11,12 +11,12 @@ const SignUp = () => {
       title="Sign Up"
       showSignUp={false}
       showFooter={false}
-      displayConditionAuthId="always"
+      displayConditionAuthId="not_logged_in"
       displayConditionProfileTypeId="always"
     >
       <SectionSignUp />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

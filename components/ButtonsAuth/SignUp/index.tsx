@@ -1,13 +1,13 @@
-import Button, { ButtonProps } from "components/Button";
-import { useRouter } from "next/router";
-import styled from "styled-components";
+import Button, { ButtonProps } from "components/Button"
+import { useRouter } from "next/router"
+import styled from "styled-components"
 
-const Wrapper = styled(Button)``;
+const Wrapper = styled(Button)``
 
 interface SignUpProps extends Partial<ButtonProps> {}
 
 const SignUp = ({ className, ...props }: SignUpProps) => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <Wrapper
@@ -22,7 +22,7 @@ const SignUp = ({ className, ...props }: SignUpProps) => {
     >
       Sign up
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

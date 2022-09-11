@@ -1,6 +1,6 @@
-import BoxAuth from "components/BoxAuth";
-import Section from "components/Section";
-import styled from "styled-components";
+import BoxSignUp from "components/BoxSignUp"
+import Section from "components/Section"
+import styled from "styled-components"
 
 const Wrapper = styled(Section)`
   display: flex;
@@ -9,16 +9,14 @@ const Wrapper = styled(Section)`
   justify-content: center;
   min-height: 100vh;
   padding-top: 80px;
-`;
+`
 
-interface SectionSignUpProps {}
-
-const SectionSignUp = ({}: SectionSignUpProps) => {
+const SectionSignUp = () => {
   return (
     <Wrapper label="Sign up">
-      <BoxAuth authMethodId="sign_up" />
+      <BoxSignUp />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SectionSignUp;
+export default SectionSignUp

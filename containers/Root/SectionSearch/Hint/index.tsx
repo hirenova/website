@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Wrapper = styled.div`
   font-size: 14px;
-`;
+`
 
 interface HintProps {
-  className?: string;
+  className?: string
 }
 
 const Hint = ({ className }: HintProps) => {
@@ -13,7 +13,7 @@ const Hint = ({ className }: HintProps) => {
     <Wrapper className={className}>
       Find Jobs, Employment & Career Opportunities
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Hint;
+export default Hint

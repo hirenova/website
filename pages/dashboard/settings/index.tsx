@@ -1,1 +1,1 @@
-export { default } from "containers/dashboard/settings/Root";
+export { default } from "containers/dashboard/settings/Root"

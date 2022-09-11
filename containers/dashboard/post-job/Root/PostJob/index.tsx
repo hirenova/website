@@ -1,45 +1,43 @@
-import Button from "components/Button";
-import CardDashboard from "components/CardDashboard";
-import FormControl from "components/FormControl";
-import FormDashboard from "components/FormDashboard";
-import FormLabel from "components/FormLabel";
-import Input from "components/Input";
-import InputTextarea from "components/InputTextarea";
-import { db } from "config/firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { JobDocumentData } from "providers/AppProvider";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import styled from "styled-components";
+import Button from "components/Button"
+import CardDashboard from "components/CardDashboard"
+import FormControl from "components/FormControl"
+import FormDashboard from "components/FormDashboard"
+import FormLabel from "components/FormLabel"
+import Input from "components/Input"
+import InputTextarea from "components/InputTextarea"
+import write from "database/write"
+import { Job } from "models/job"
+import { ChangeEventHandler, FormEventHandler, useState } from "react"
+import styled from "styled-components"
 
-const Wrapper = styled(CardDashboard)``;
+const Wrapper = styled(CardDashboard)``
 
 interface PostJobProps {
-  className?: string;
+  className?: string
 }
 
 const PostJob = ({ className }: PostJobProps) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const [title, setTitle] = useState<JobDocumentData["title"]>("");
+  const [title, setTitle] = useState<Job["title"]>("")
 
   // const [description, setDescription] = useState<EditorState>(() =>
   //   EditorState.createEmpty()
   // );
 
-  const [description, setDescription] =
-    useState<JobDocumentData["description"]>();
+  const [description, setDescription] = useState<Job["description"]>()
 
   // const [creator, setCreator] = useState<JobDocumentData["creator"]>("");
 
-  const [company, setCompany] = useState<JobDocumentData["company"]>("");
+  const [company, setCompany] = useState<string>("")
 
-  const [location, setLocation] = useState<JobDocumentData["location"]>("");
+  const [location, setLocation] = useState<Job["locationTitle"]>("")
 
   // const [deadline, setDeadline] = useState<JobDocumentData["deadline"]>();
 
   const onTitleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setTitle(event.target.value);
-  };
+    setTitle(event.target.value)
+  }
 
   // const onDescriptionChange = (editorState: EditorState) => {
   //   setDescription(editorState);
@@ -48,46 +46,53 @@ const PostJob = ({ className }: PostJobProps) => {
   const onDescriptionChange: ChangeEventHandler<HTMLTextAreaElement> = (
     event
   ) => {
-    setDescription(event.target.value);
-  };
+    setDescription(event.target.value)
+  }
 
   // const onCreatorChange: ChangeEventHandler<HTMLInputElement> = (event) => {
   //   setCreator(event.target.value);
   // };
 
   const onCompanyChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setCompany(event.target.value);
-  };
+    setCompany(event.target.value)
+  }
 
   const onLocationChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setLocation(event.target.value);
-  };
+    setLocation(event.target.value)
+  }
 
   // const onDeadlineChange: ChangeEventHandler<HTMLInputElement> = (event) => {
   //   // setDeadline(event.target.value);
   // };
 
   const clearForm = () => {
-    setTitle("");
-    setDescription("");
-    setCompany("");
-    setLocation("");
-  };
+    setTitle("")
+    setDescription("")
+    setCompany("")
+    setLocation("")
+  }
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    setLoading(true);
-    const jobDocumentData: JobDocumentData = {
+  const onSubmit: FormEventHandler<HTMLFormElement> = async () => {
+    setLoading(true)
+    // const jobDocumentData: JobDocumentData = {
+    //   title,
+    //   description,
+    //   company,
+    //   location,
+    // }
+
+    // await addDoc(collection(db, "jobs"), jobDocumentData)
+
+    write.job({
       title,
       description,
-      company,
-      location,
-    };
+      organizationId: "62e2f8ea-5ba6-4277-b1b6-6feae16a764f", // TODO
+      locationTitle: location, // TODO
+    })
 
-    await addDoc(collection(db, "jobs"), jobDocumentData);
-
-    clearForm();
-    setLoading(false);
-  };
+    clearForm()
+    setLoading(false)
+  }
 
   return (
     <Wrapper className={className} label="Post a job">
@@ -140,7 +145,7 @@ const PostJob = ({ className }: PostJobProps) => {
         </Button>
       </FormDashboard>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default PostJob;
+export default PostJob

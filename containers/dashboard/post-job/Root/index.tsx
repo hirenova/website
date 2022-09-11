@@ -1,11 +1,11 @@
-import PageDashboard from "components/PageDashboard";
-import styled from "styled-components";
+import PageDashboard from "components/PageDashboard"
+import styled from "styled-components"
 
-import PostJob from "./PostJob";
+import PostJob from "./PostJob"
 
 const Wrapper = styled(PageDashboard)`
   margin-top: 80px;
-`;
+`
 
 const Root = () => {
   return (
@@ -16,7 +16,7 @@ const Root = () => {
     >
       <PostJob />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Root;
+export default Root

@@ -1,6 +1,6 @@
-import BoxAuth from "components/BoxAuth";
-import Section from "components/Section";
-import styled from "styled-components";
+import BoxLogin from "components/BoxLogin"
+import Section from "components/Section"
+import styled from "styled-components"
 
 const Wrapper = styled(Section)`
   display: flex;
@@ -9,16 +9,14 @@ const Wrapper = styled(Section)`
   justify-content: center;
   min-height: 100vh;
   padding-top: 80px;
-`;
+`
 
-interface SectionLoginProps {}
-
-const SectionLogin = ({}: SectionLoginProps) => {
+const SectionLogin = () => {
   return (
     <Wrapper label="Log in">
-      <BoxAuth authMethodId="login" />
+      <BoxLogin />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SectionLogin;
+export default SectionLogin

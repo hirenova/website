@@ -1,33 +1,33 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react"
 
 const useClickAway = (
   callback: () => void,
   ignore?: RefObject<HTMLDivElement>
 ) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null)
 
   const onClickAway = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
-      callback();
+      callback()
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("click", onClickAway, true);
-    document.addEventListener("contextmenu", onClickAway, true);
+    document.addEventListener("click", onClickAway, true)
+    document.addEventListener("contextmenu", onClickAway, true)
     document.onkeydown = function (event) {
       if (event.key === "Escape") {
-        callback();
+        callback()
       }
-    };
+    }
 
     return () => {
-      document.removeEventListener("click", onClickAway, true);
-      document.removeEventListener("contextmenu", onClickAway, true);
-    };
-  });
+      document.removeEventListener("click", onClickAway, true)
+      document.removeEventListener("contextmenu", onClickAway, true)
+    }
+  })
 
-  return { ref };
-};
+  return { ref }
+}
 
-export default useClickAway;
+export default useClickAway

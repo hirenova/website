@@ -1,24 +1,29 @@
-import BoxNavigation, { BoxNavigationProps } from "components/BoxNavigation";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import { Navigation } from "navigation"
+import styled from "styled-components"
 
-import Item, { ItemProps } from "./Item";
+import Item from "./Item"
 
-const Wrapper = styled(BoxNavigation)`
+const Wrapper = styled(Box)`
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
-`;
+`
 
-export interface MenuProps extends Omit<BoxNavigationProps, "buttonAs"> {}
+export interface MenuProps extends BoxProps {
+  navigation: Navigation
+}
 
-const Menu = ({ className, children, navigation, ...props }: MenuProps) => {
+const Menu = ({ className, navigation, ...props }: MenuProps) => {
   return (
     <Wrapper className={className} {...props}>
       {navigation.map((item, index) => (
-        <Item key={index} {...item} />
+        <Item key={index} redirect={item.redirect}>
+          {item.children}
+        </Item>
       ))}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

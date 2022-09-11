@@ -1,10 +1,10 @@
-import { Icon } from "@chakra-ui/react";
-import Box, { BoxProps } from "components/Box";
-import Heading from "components/Heading";
-import { FaEye, FaProjectDiagram, FaSave, FaSuitcase } from "react-icons/fa";
-import styled from "styled-components";
+import { Icon } from "@chakra-ui/react"
+import Box, { BoxProps } from "components/Box"
+import Heading from "components/Heading"
+import { FaEye, FaProjectDiagram, FaSave, FaSuitcase } from "react-icons/fa"
+import styled from "styled-components"
 
-import Statistic from "./Statistic";
+import Statistic from "./Statistic"
 
 const Wrapper = styled(Box)`
   display: grid;
@@ -20,7 +20,7 @@ const Wrapper = styled(Box)`
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto;
   }
-`;
+`
 
 const StatIcon = styled(Icon)`
   padding: 20px;
@@ -29,17 +29,17 @@ const StatIcon = styled(Icon)`
   grid-column: 1;
   height: 60px;
   width: 60px;
-`;
+`
 
 const StatLabel = styled(Box)`
   grid-row: 1;
   grid-column: 2;
-`;
+`
 
 const StatNumber = styled(Heading)`
   grid-row: 2;
   grid-column: 2;
-`;
+`
 
 interface StatisticsProps extends BoxProps {}
 
@@ -67,7 +67,7 @@ const Statistics = ({ className, ...props }: StatisticsProps) => {
         <StatLabel>Saved jobs</StatLabel>
       </Statistic>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Statistics;
+export default Statistics

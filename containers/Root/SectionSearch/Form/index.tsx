@@ -1,20 +1,20 @@
-import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { css } from "@emotion/react";
-import FormRaw from "components/Form";
-import { useRouter } from "next/router";
+import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react"
+import { css } from "@emotion/react"
+import FormRaw from "components/Form"
+import { useRouter } from "next/router"
 import {
   ChangeEventHandler,
   FormEventHandler,
   MouseEventHandler,
   useState,
-} from "react";
-import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
-import styled from "styled-components";
-import { encodeURIAll, encodeURIComponents } from "utils";
+} from "react"
+import { FaMapMarkerAlt, FaSearch } from "react-icons/fa"
+import styled from "styled-components"
+import { encodeURIAll, encodeURIComponents } from "utils"
 
-import Keywords from "./Keywords";
-import Location from "./Location";
-import SubmitButton from "./SubmitButton";
+import Keywords from "./Keywords"
+import Location from "./Location"
+import SubmitButton from "./SubmitButton"
 
 const Wrapper = styled(FormRaw)`
   display: flex;
@@ -31,7 +31,7 @@ const Wrapper = styled(FormRaw)`
   @media (max-width: 1000px) {
     flex-direction: column;
   }
-`;
+`
 
 const Separator = styled.div`
   background: lightgrey;
@@ -44,29 +44,29 @@ const Separator = styled.div`
     width: 100%;
     flex-direction: column;
   }
-`;
+`
 
 interface FormProps {
-  className?: string;
+  className?: string
 }
 
 const Form = ({ className }: FormProps) => {
-  const [keywords, setKeywords] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [keywords, setKeywords] = useState<string>("")
+  const [location, setLocation] = useState<string>("")
 
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    router.push(encodeURIAll("/jobs", { keywords, location }));
-  };
+    router.push(encodeURIAll("/jobs", { keywords, location }))
+  }
 
   const onKeywordsChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setKeywords(event.target.value);
-  };
+    setKeywords(event.target.value)
+  }
 
   const onLocationChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setLocation(event.target.value);
-  };
+    setLocation(event.target.value)
+  }
 
   return (
     <Wrapper className={className} onSubmit={onSubmit}>
@@ -74,7 +74,7 @@ const Form = ({ className }: FormProps) => {
       <Location onChange={onLocationChange} />
       <SubmitButton />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

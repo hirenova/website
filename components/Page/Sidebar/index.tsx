@@ -1,14 +1,16 @@
-import Box, { BoxProps } from "components/Box";
-import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth";
-import Divider from "components/Divider";
-import useApp from "hooks/useApp";
-import useClickAway from "hooks/useClickAway";
-import styled, { css } from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import ButtonsAuth, { ButtonsAuthProps } from "components/ButtonsAuth"
+import Divider from "components/Divider"
+import useApp from "hooks/useApp"
+import useAuth from "hooks/useAuth"
+import useClickAway from "hooks/useClickAway"
+import styled, { css } from "styled-components"
+import { acceptProfileType } from "utils"
 
-import Menu, { MenuProps } from "./Menu";
+import Menu, { MenuProps } from "./Menu"
 
 interface StyledSidebarProps extends BoxProps {
-  open: boolean;
+  open: boolean
 }
 
 const Wrapper = styled(Box)<StyledSidebarProps>`
@@ -33,18 +35,18 @@ const Wrapper = styled(Box)<StyledSidebarProps>`
         `
       : css``}
   transition: 0.3s;
-`;
+`
 
 const SidebarContent = styled(Box)`
   display: flex;
   flex-direction: column;
-`;
+`
 
 const StyledButtonsAuth = styled(ButtonsAuth)`
   padding: 20px 40px;
-`;
+`
 
-export interface SidebarProps
+interface SidebarProps
   extends ButtonsAuthProps,
     Pick<MenuProps, "navigation"> {}
 
@@ -55,15 +57,25 @@ const Sidebar = ({
   showLogout,
   showSignUp,
 }: SidebarProps) => {
-  const { sidebarOpen, setSidebarOpen } = useApp();
+  const { sidebarOpen, setSidebarOpen } = useApp()
 
-  const { user } = useApp();
+  const { user, profile } = useAuth()
 
   const onClickAway = () => {
-    setSidebarOpen(false);
-  };
+    setSidebarOpen(false)
+  }
 
-  const { ref } = useClickAway(onClickAway);
+  const { ref } = useClickAway(onClickAway)
+
+  const navigationFiltered = navigation.filter(
+    (item) =>
+      item.redirect?.pathname?.startsWith("/dashboard/") &&
+      profile &&
+      acceptProfileType(
+        item.displayConditionProfileTypeId,
+        profile.activeProfileType
+      )
+  )
 
   return (
     <Wrapper as="div" ref={ref} open={sidebarOpen}>
@@ -73,17 +85,9 @@ const Sidebar = ({
             (item) => !item.redirect?.pathname?.startsWith("/dashboard/")
           )}
         />
-        {user ? (
-          <>
-            <Divider />
-            <Menu
-              navigation={navigation.filter((item) =>
-                item.redirect?.pathname?.startsWith("/dashboard/")
-              )}
-            />
-          </>
-        ) : null}
         <Divider />
+        <Menu navigation={navigationFiltered} />
+        {user ? <Divider /> : null}
         <StyledButtonsAuth
           showLogin={showLogin}
           showLogout={showLogout}
@@ -91,7 +95,7 @@ const Sidebar = ({
         />
       </SidebarContent>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

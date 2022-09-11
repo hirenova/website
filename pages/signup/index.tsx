@@ -1,1 +1,1 @@
-export { default } from "containers/signup/Root";
+export { default } from "containers/signup/Root"

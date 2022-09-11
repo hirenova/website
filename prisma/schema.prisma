@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  supabaseAuthId           String           @unique @db.Uuid
+  email                    String           @unique @db.VarChar
+  instanceId               String?          @db.Uuid
+  aud                      String?          @db.VarChar
+  role                     String?          @db.VarChar
+  encryptedPassword        String?          @db.VarChar
+  emailConfirmedAt         DateTime?        @db.Timestamptz(6)
+  invitedAt                DateTime?        @db.Timestamptz(6)
+  confirmationToken        String?          @db.VarChar
+  confirmationSentAt       DateTime?        @db.Timestamptz(6)
+  recoveryToken            String?          @db.VarChar
+  recoverySentAt           DateTime?        @db.Timestamptz(6)
+  emailChangeTokenNew      String?          @db.VarChar
+  emailChange              String?          @db.VarChar
+  emailChangeSentAt        DateTime?        @db.Timestamptz(6)
+  lastSignInAt             DateTime?        @db.Timestamptz(6)
+  rawAppMetaData           Json?
+  rawUserMetaData          Json?
+  isSuperAdmin             Boolean?
+  createdAt                DateTime?        @db.Timestamptz(6)
+  updatedAt                DateTime?        @db.Timestamptz(6)
+  phone                    String?          @db.VarChar
+  phoneConfirmedAt         DateTime?        @db.Timestamptz(6)
+  phoneChange              String?          @db.VarChar
+  phoneChangeToken         String?          @db.VarChar
+  phoneChangeSentAt        DateTime?        @db.Timestamptz(6)
+  confirmedAt              DateTime?        @db.Timestamptz(6)
+  emailChangeTokenCurrent  String?          @db.VarChar
+  emailChangeConfirmStatus Int?             @db.SmallInt
+  bannedUntil              DateTime?        @db.Timestamptz(6)
+  reauthenticationToken    String?          @db.VarChar
+  reauthenticationSentAt   DateTime?        @db.Timestamptz(6)
+  firstName                String?          @db.VarChar
+  lastName                 String?          @db.VarChar
+  JobApplication           JobApplication[]
+  activeProfileType        ProfileType
+  hasCandidateProfile      Boolean
+  hasEmployerProfile       Boolean
+}
+
+enum ProfileType {
+  CANDIDATE
+  EMPLOYER
+}
+
+model Job {
+  createdAt        DateTime           @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt        DateTime           @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title            String             @db.VarChar
+  plannedHireCount Int?               @default(1) @db.SmallInt
+  active           Boolean            @default(true)
+  description      String             @default("")
+  locationTitle    String
+  durationAmount   Int?
+  durationUnit     JobDurationUnit?
+  payAmount        Int?
+  payCurrency      JobPayCurrency?
+  payPeriod        JobPayPeriod?
+  extent           JobExtent          @default(LONG_TERM)
+  time             JobTime            @default(FULL_TIME)
+  format           JobFormat          @default(ON_SITE)
+  experienceLevel  JobExperienceLevel
+  organizationId   String             @db.Uuid
+  Organization     Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  JobApplication   JobApplication[]
+}
+
+model JobApplication {
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  jobId     String   @db.Uuid
+  userId    String   @db.Uuid
+  Job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Organization {
+  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt     DateTime      @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt     DateTime      @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  title         String        @db.VarChar
+  sector        Sector
+  domainName    String?       @unique @db.VarChar
+  employeeCount EmployeeCount
+  locationTitle String
+  linkedInId    String
+  Job           Job[]
+}
+
+enum JobExtent {
+  CONTRACT
+  INTERSHIP
+  TEMPORARY
+  LONG_TERM
+}
+
+enum JobTime {
+  PART_TIME
+  FULL_TIME
+}
+
+enum JobFormat {
+  ON_SITE
+  HYBRID
+  REMOTE
+}
+
+enum JobExperienceLevel {
+  INTERNSHIP
+  ENTRY_LEVEL
+  JUNIOR
+  ASSOCIATE
+  MID_SENIOR
+  SENIOR
+  DIRECTOR
+  EXECUTIVE
+}
+
+enum JobDurationUnit {
+  HOUR
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+enum JobPayPeriod {
+  HOUR
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+enum JobPayCurrency {
+  EUR
+  GBP
+  USD
+}
+
+enum Sector {
+  ENERGY
+  MATERIALS
+  INDUSTRIALS
+  CONSUMER_DISCRETIONARY
+  CONSUMER_STAPLES
+  HEALTH_CARE
+  FINANCIALS
+  INFORMATION_TECHNOLOGY
+  TELECOMMUNICATION_SERVICES
+  UTILITIES
+  REAL_ESTATE
+  OTHER
+}
+
+enum EmployeeCount {
+  FROM_1_TO_10
+  FROM_11_TO_50
+  FROM_51_TO_200
+  FROM_201_TO_1000
+  FROM_1001_TO_5000
+  FROM_5001_TO_20000
+  FROM_20001_TO_100000
+  FROM_100000_TO_MORE
+}

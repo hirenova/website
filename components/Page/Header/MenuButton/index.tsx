@@ -1,9 +1,9 @@
-import useApp from "hooks/useApp";
-import { MouseEventHandler, useEffect, useState } from "react";
-import styled from "styled-components";
+import useApp from "hooks/useApp"
+import { MouseEventHandler, useEffect, useState } from "react"
+import styled from "styled-components"
 
 interface MenuButtonProps {
-  className?: string;
+  className?: string
 }
 
 const Wrapper = styled.img`
@@ -12,22 +12,22 @@ const Wrapper = styled.img`
   @media (min-width: 1300px) {
     display: none;
   }
-`;
+`
 
 const MenuButton = ({ className }: MenuButtonProps) => {
-  const { sidebarOpen, setSidebarOpen } = useApp();
-  const [freeze, setFreeze] = useState<boolean>();
+  const { sidebarOpen, setSidebarOpen } = useApp()
+  const [freeze, setFreeze] = useState<boolean>()
 
-  const onClick: MouseEventHandler<HTMLImageElement> = (event) => {
-    if (!freeze) setSidebarOpen(!sidebarOpen);
-  };
+  const onClick: MouseEventHandler<HTMLImageElement> = () => {
+    if (!freeze) setSidebarOpen(!sidebarOpen)
+  }
 
   useEffect(() => {
-    setFreeze(true);
+    setFreeze(true)
     setTimeout(() => {
-      setFreeze(false);
-    }, 100);
-  }, [sidebarOpen]);
+      setFreeze(false)
+    }, 100)
+  }, [sidebarOpen])
 
   return (
     <Wrapper
@@ -35,7 +35,7 @@ const MenuButton = ({ className }: MenuButtonProps) => {
       src={sidebarOpen ? "/close.webp" : "/menu.webp"}
       onClick={onClick}
     />
-  );
-};
+  )
+}
 
-export default MenuButton;
+export default MenuButton

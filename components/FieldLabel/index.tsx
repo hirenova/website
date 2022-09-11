@@ -1,8 +1,7 @@
-import Box, { BoxProps } from "components/Box";
-import FormLabel, { FormLabelProps } from "components/FormLabel";
-import styled from "styled-components";
+import FormLabel, { FormLabelProps } from "components/FormLabel"
+import styled from "styled-components"
 
-const Wrapper = styled(FormLabel)``;
+const Wrapper = styled(FormLabel)``
 
 interface FieldLabelProps extends FormLabelProps {}
 
@@ -11,7 +10,7 @@ const FieldLabel = ({ className, children, ...props }: FieldLabelProps) => {
     <Wrapper className={className} {...props}>
       {children}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default FieldLabel;
+export default FieldLabel

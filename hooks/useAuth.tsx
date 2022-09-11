@@ -1,124 +1,86 @@
-import { auth, db } from "config/firebase";
-import { FirebaseError } from "firebase/app";
-import {
-  FacebookAuthProvider,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  OAuthProvider,
-  UserCredential,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { Provider, UserCredentials } from "@supabase/supabase-js"
+import supabase from "config/supabase"
+import { PickFromUnion } from "generics"
+import { useRouter } from "next/router"
+import { SupabaseContext } from "providers/SupabaseProvider"
+import { useContext } from "react"
 
-import useApp from "./useApp";
+import useToast from "./useToast"
 
-// import { useCollection } from "react-firebase-hooks/firestore";
+export type AuthProviderId = PickFromUnion<
+  Provider,
+  "github" | "google" | "linkedin"
+>
 
-export type AccountTypeIdType = "candidate" | "employer";
-
-export type AuthMethodIdType = "login" | "sign_up";
-
-export interface AuthParams {
-  authMethodId: AuthMethodIdType;
+interface UserCredentialEmailPassword {
+  email: UserCredentials["email"]
+  password: Required<UserCredentials>["password"]
 }
 
-export type AuthProviderIdType = "google" | "microsoft" | "facebook" | "github";
-
-export interface AuthWithProviderParams extends AuthParams {
-  authProviderId: AuthProviderIdType;
+interface UserCredentialProvider {
+  provider: AuthProviderId
 }
 
-export interface AuthWithEmailPasswordParams extends AuthParams {
-  email: string;
-  password: string;
-}
+type UserCredential = UserCredentialEmailPassword | UserCredentialProvider
 
 const useAuth = () => {
-  // const [users, usersLoading, usersError] = useCollection(
-  //   collection(db, "users")
-  // );
+  const toast = useToast()
+  const router = useRouter()
 
-  const { setAuthError } = useApp();
+  const {
+    loading,
+    session,
+    user,
+    error,
+    profile,
+    setError,
+    setLoading,
+    refreshProfile,
+  } = useContext(SupabaseContext)
 
-  const onAuth = async (credential: UserCredential) => {
-    const userDocumentData = await getDoc(
-      doc(db, "users", credential.user.uid)
-    );
-    if (!userDocumentData.exists()) {
-      await setDoc(doc(db, "users", credential.user.uid), {});
+  const signUp = async (credentials: UserCredential) => {
+    setLoading(true)
+    const { error } = await supabase.auth.signUp(credentials)
+    setError(error)
+    if (!error) {
+      toast({ description: "Signed up", status: "success" })
     }
-  };
+    setLoading(false)
+  }
 
-  const authProviders = {
-    google: () => new GoogleAuthProvider(),
-    microsoft: () => new OAuthProvider("microsoft.com"),
-    facebook: () => new FacebookAuthProvider(),
-    github: () => new GithubAuthProvider(),
-  };
-
-  const authWithProvider = async ({
-    authMethodId,
-    authProviderId,
-  }: AuthWithProviderParams) => {
-    const provider = authProviders[authProviderId]();
-    provider.setCustomParameters({
-      prompt: "select_account",
-    });
-    if (authMethodId === "login" || authMethodId === "sign_up") {
-      try {
-        const credential = await signInWithPopup(auth, provider);
-        await onAuth(credential);
-      } catch (error) {
-        if (error instanceof FirebaseError) setAuthError(error);
-        else console.log(error);
-      }
+  const login = async (credentials: UserCredential) => {
+    console.log("logging in 123")
+    setLoading(true)
+    const { error } = await supabase.auth.signIn(credentials, {
+      redirectTo: "/login",
+    })
+    setError(error)
+    if (!error) {
+      toast({ description: "Logged in", status: "success" })
     }
-  };
-
-  const authWithEmailPassword = async ({
-    authMethodId,
-    email,
-    password,
-  }: AuthWithEmailPasswordParams) => {
-    try {
-      if (authMethodId === "login") {
-        const credential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        await onAuth(credential);
-      } else {
-        const credential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        await onAuth(credential);
-      }
-    } catch (error) {
-      if (error instanceof FirebaseError) {
-        setAuthError(error);
-      }
-    }
-  };
+    setLoading(false)
+  }
 
   const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    setLoading(true)
+    const { error } = await supabase.auth.signOut()
+    setError(error)
+    if (!error) toast({ description: "Logged out", status: "success" })
+    setLoading(false)
+    router.push("/")
+  }
 
   return {
-    authWithProvider,
-    authWithEmailPassword,
+    user,
+    profile,
+    session,
+    loading,
+    error,
+    signUp,
+    login,
     logout,
-  };
-};
+    refreshProfile,
+  }
+}
 
-export default useAuth;
+export default useAuth

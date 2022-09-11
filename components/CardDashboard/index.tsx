@@ -1,20 +1,20 @@
-import Card, { CardProps } from "components/Card";
-import CardContent from "components/CardContent";
-import CardLabel from "components/CardLabel";
-import styled from "styled-components";
+import Card, { CardProps } from "components/Card"
+import CardContent from "components/CardContent"
+import CardLabel from "components/CardLabel"
+import styled from "styled-components"
 
 const Wrapper = styled(Card)`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`;
+`
 
-const CardLabelDashboard = styled(CardLabel)``;
+const CardLabelDashboard = styled(CardLabel)``
 
-const CardContentDashboard = styled(CardContent)``;
+const CardContentDashboard = styled(CardContent)``
 
-export interface CardDashboardProps extends CardProps {
-  label: React.ReactNode;
+interface CardDashboardProps extends CardProps {
+  label: React.ReactNode
 }
 
 const CardDashboard = ({
@@ -28,7 +28,7 @@ const CardDashboard = ({
       <CardLabelDashboard size={"lg"}>{label}</CardLabelDashboard>
       <CardContentDashboard>{children}</CardContentDashboard>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default CardDashboard;
+export default CardDashboard

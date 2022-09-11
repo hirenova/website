@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   compiler: { styledComponents: true },
-};
+  async redirects() {
+    return [
+      {
+        source: "/dashboard",
+        destination: "/dashboard/profile",
+        permanent: true,
+      },
+    ]
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

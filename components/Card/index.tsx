@@ -1,5 +1,5 @@
-import Box, { BoxProps } from "components/Box";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import styled from "styled-components"
 
 const Wrapper = styled(Box)`
   /* border: 1px solid lightgrey; */
@@ -7,12 +7,12 @@ const Wrapper = styled(Box)`
   border-radius: 12px;
   padding: 1.5rem;
   background: white;
-`;
+`
 
 export interface CardProps extends BoxProps {}
 
 const Card = ({ className, ...props }: CardProps) => {
-  return <Wrapper className={className} {...props}></Wrapper>;
-};
+  return <Wrapper className={className} {...props}></Wrapper>
+}
 
-export default Card;
+export default Card

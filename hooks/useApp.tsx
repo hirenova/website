@@ -1,8 +1,9 @@
-import { AppContext } from "providers/AppProvider";
-import { useContext } from "react";
+import { AppContext } from "providers/AppProvider"
+import { useContext } from "react"
 
 const useApp = () => {
-  return useContext(AppContext);
-};
+  const { ...appContextValue } = useContext(AppContext)
+  return { ...appContextValue }
+}
 
-export default useApp;
+export default useApp

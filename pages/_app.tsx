@@ -1,21 +1,27 @@
-import "config/firebase";
-import "@fontsource/montserrat";
-import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat"
+import "@fontsource/montserrat/500.css"
 
-import "../styles/globals.css";
+import "../styles/globals.css"
 
-import { ChakraProvider } from "@chakra-ui/react";
-import type { AppProps } from "next/app";
-import AppProvider from "providers/AppProvider";
+import { ChakraProvider } from "@chakra-ui/react"
+import { Auth } from "@supabase/ui"
+import supabase from "config/supabase"
+import type { AppProps } from "next/app"
+import AppProvider from "providers/AppProvider"
+import SupabaseProvider from "providers/SupabaseProvider"
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ChakraProvider>
-      <AppProvider>
-        <Component {...pageProps} />
-      </AppProvider>
+      <Auth.UserContextProvider supabaseClient={supabase}>
+        <SupabaseProvider>
+          <AppProvider>
+            <Component {...pageProps} />
+          </AppProvider>
+        </SupabaseProvider>
+      </Auth.UserContextProvider>
     </ChakraProvider>
-  );
+  )
 }
 
-export default App;
+export default App

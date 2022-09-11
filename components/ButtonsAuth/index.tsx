@@ -1,21 +1,21 @@
-import Box, { BoxProps } from "components/Box";
-import useApp from "hooks/useApp";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import useAuth from "hooks/useAuth"
+import styled from "styled-components"
 
-import Login from "./Login";
-import Logout from "./Logout";
-import SignUp from "./SignUp";
+import Login from "./Login"
+import Logout from "./Logout"
+import SignUp from "./SignUp"
 
 const Wrapper = styled(Box)`
   display: flex;
   gap: 20px;
   align-items: center;
-`;
+`
 
 export interface ButtonsAuthProps extends BoxProps {
-  showLogout: boolean;
-  showLogin: boolean;
-  showSignUp: boolean;
+  showLogout: boolean
+  showLogin: boolean
+  showSignUp: boolean
 }
 
 const ButtonsAuth = ({
@@ -25,7 +25,7 @@ const ButtonsAuth = ({
   showLogout,
   ...props
 }: ButtonsAuthProps) => {
-  const { user } = useApp();
+  const { user } = useAuth()
 
   return (
     <Wrapper className={className} {...props}>
@@ -38,7 +38,7 @@ const ButtonsAuth = ({
         </>
       )}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ButtonsAuth;
+export default ButtonsAuth

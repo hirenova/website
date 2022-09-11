@@ -1,14 +1,13 @@
-import Box, { BoxProps } from "components/Box";
-import Button from "components/Button";
-import { db } from "config/firebase";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
-import useApp from "hooks/useApp";
-import { MouseEventHandler } from "react";
-import styled from "styled-components";
+import Box, { BoxProps } from "components/Box"
+import Button from "components/Button"
+import write from "database/write"
+import useAuth from "hooks/useAuth"
+import { MouseEventHandler } from "react"
+import styled from "styled-components"
 
-import Item from "./Item";
-import List from "./List";
-import ListItem from "./ListItem";
+import Item from "./Item"
+import List from "./List"
+import ListItem from "./ListItem"
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -16,22 +15,28 @@ const Wrapper = styled(Box)`
   @media (max-width: 600px) {
     flex-direction: column;
   }
-`;
+`
 
 interface OptionsProps extends BoxProps {}
 
 const Options = ({ className, ...props }: OptionsProps) => {
-  const { user } = useApp();
+  const { user, profile, refreshProfile } = useAuth()
 
-  if (!user) return null;
+  if (!user || !profile) {
+    return null
+  }
 
-  const onCandidate: MouseEventHandler<HTMLButtonElement> = () => {
-    updateDoc(doc(db, "users", user.uid), { candidate: {} });
-  };
+  const onCandidate: MouseEventHandler<HTMLButtonElement> = async () => {
+    await write.enableCandidateProfile(profile.id)
+    await write.activateProfileType(profile.id, "CANDIDATE")
+    await refreshProfile()
+  }
 
-  const onEmployer: MouseEventHandler<HTMLButtonElement> = () => {
-    updateDoc(doc(db, "users", user.uid), { employer: {} });
-  };
+  const onEmployer: MouseEventHandler<HTMLButtonElement> = async () => {
+    await write.enableEmployerProfile(profile.id)
+    await write.activateProfileType(profile.id, "EMPLOYER")
+    await refreshProfile()
+  }
 
   return (
     <Wrapper className={className} {...props}>
@@ -56,7 +61,7 @@ const Options = ({ className, ...props }: OptionsProps) => {
         </List>
       </Item>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Options;
+export default Options

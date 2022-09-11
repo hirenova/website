@@ -1,1 +1,1 @@
-export { default } from "containers/dashboard/post-job/Root";
+export { default } from "containers/dashboard/post-job/Root"
