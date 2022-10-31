@@ -1,10 +1,11 @@
-import NextLink from "next/link"
+import NextLink, { LinkProps as NextLinkProps } from "next/link"
 import styled from "styled-components"
 
-interface LinkProps {
+export interface LinkProps {
   className?: string
   children: React.ReactNode
   href: string
+  target?: "_blank"
 }
 
 const Wrapper = styled(NextLink)``
@@ -15,10 +16,12 @@ const A = styled.a`
   cursor: pointer;
 `
 
-const Link = ({ className, children, href }: LinkProps) => {
+const Link = ({ className, children, href, target }: LinkProps) => {
   return (
     <Wrapper href={href} passHref>
-      <A className={className}>{children}</A>
+      <A className={className} target={target}>
+        {children}
+      </A>
     </Wrapper>
   )
 }
