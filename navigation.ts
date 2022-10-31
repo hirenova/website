@@ -12,6 +12,7 @@ export interface NavigationItem {
   redirect: { pathname: string }
   displayConditionAuthId: DisplayConditionAuthId
   displayConditionProfileTypeId: DisplayConditionProfileTypeId
+  highlight?: boolean
 }
 
 export type Navigation = NavigationItem[]
@@ -42,8 +43,14 @@ const navigation: Navigation = [
     displayConditionProfileTypeId: "always",
   },
   {
-    children: "Contact",
-    redirect: { pathname: "/contact" },
+    children: "Referrers",
+    redirect: { pathname: "/referrers" },
+    displayConditionAuthId: "always",
+    displayConditionProfileTypeId: "always",
+  },
+  {
+    children: "How it works",
+    redirect: { pathname: "/how-it-works" },
     displayConditionAuthId: "always",
     displayConditionProfileTypeId: "always",
   },
@@ -54,9 +61,9 @@ const navigation: Navigation = [
     displayConditionProfileTypeId: "always",
   },
   {
-    children: "Profile",
-    redirect: { pathname: "/dashboard/profile" },
-    displayConditionAuthId: "logged_in",
+    children: "Contact",
+    redirect: { pathname: "/contact" },
+    displayConditionAuthId: "always",
     displayConditionProfileTypeId: "always",
   },
   {

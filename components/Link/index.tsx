@@ -1,4 +1,4 @@
-import NextLink, { LinkProps as NextLinkProps } from "next/link"
+import NextLink from "next/link"
 import styled from "styled-components"
 
 export interface LinkProps {
@@ -19,7 +19,7 @@ const A = styled.a`
 const Link = ({ className, children, href, target }: LinkProps) => {
   return (
     <Wrapper href={href} passHref>
-      <A className={className} target={target}>
+      <A className={className} target={target} rel={"noopener noreferrer"}>
         {children}
       </A>
     </Wrapper>

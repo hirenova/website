@@ -1,5 +1,6 @@
 import Box, { BoxProps } from "components/Box"
 import { Navigation } from "navigation"
+import { useRouter } from "next/router"
 import styled from "styled-components"
 
 import Item from "./Item"
@@ -20,10 +21,15 @@ interface MenuItemsProps extends Omit<BoxProps, "children"> {
 }
 
 const MenuItems = ({ className, navigation, ...props }: MenuItemsProps) => {
+  const router = useRouter()
   return (
     <Wrapper className={className} {...props}>
       {navigation.map((item, index) => (
-        <Item key={index} redirect={item.redirect}>
+        <Item
+          key={index}
+          redirect={item.redirect}
+          highlight={item.redirect.pathname === router.pathname}
+        >
           {item.children}
         </Item>
       ))}

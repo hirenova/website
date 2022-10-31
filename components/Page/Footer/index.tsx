@@ -14,6 +14,7 @@ const Wrapper = styled(Box)`
   margin-top: auto;
   padding: 20px 5%;
   gap: 20px;
+  border-top: 1px solid lightgrey;
 `
 
 const LinkGroups = styled(Box)`
@@ -37,8 +38,10 @@ const Footer = ({ className, ...props }: FooterProps) => {
           <Link href="/">Home</Link>
           <Link href="/candidates">Candidates</Link>
           <Link href="/jobs">Jobs</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/contact">Referrers</Link>
+          <Link href="/contact">How it works</Link>
           <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
         </LinkGroup>
         <LinkGroup label="Company">
           <Link href="/">Careers</Link>
@@ -48,7 +51,7 @@ const Footer = ({ className, ...props }: FooterProps) => {
             Instagram
           </Link>
           <Link href="/">LinkedIn</Link>
-          <Link href="/">Facebook</Link>
+          <Link href="https://www.facebook.com/HireNovaDublin/">Facebook</Link>
           <Link href="/">Twitter</Link>
         </LinkGroup>
         <LinkGroup label="Legal">

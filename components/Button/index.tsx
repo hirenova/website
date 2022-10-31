@@ -15,14 +15,20 @@ const Wrapper = styled(ButtonChakra)`
   }
 `
 
+interface UrlObjectExtended extends UrlObject {
+  target?: "_blank"
+}
+
 export interface ButtonProps extends ButtonChakraProps {
-  redirect?: UrlObject
+  redirect?: UrlObjectExtended
 }
 
 const Button = ({ className, redirect, onClick, ...props }: ButtonProps) => {
   const router = useRouter()
   const onClickIntercept: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (redirect) router.push(redirect)
+    if (redirect?.target && redirect?.pathname) {
+      open(redirect.pathname, "_blank", "noopener,noreferrer")
+    } else if (redirect) router.push(redirect)
     if (onClick) onClick(event)
   }
   return (

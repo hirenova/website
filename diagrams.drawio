@@ -1,0 +1,28 @@
+<mxfile host="65bd71144e">
+    <diagram id="3228e29e-7158-1315-38df-8450db1d8a1d" name="Users">
+        <mxGraphModel dx="511" dy="534" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="21531" value="" style="ellipse;fillColor=#F08705;opacity=60;strokeColor=none;html=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="254" width="319.5" height="318.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="21532" value="" style="ellipse;fillColor=#12AAB5;opacity=60;strokeColor=none;html=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="164" width="500" height="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="21533" value="" style="ellipse;fillColor=#e85642;opacity=60;strokeColor=none;html=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="569.5" y="323.75" width="220.5" height="179" as="geometry"/>
+                </mxCell>
+                <mxCell id="reRJ3kZ7E1X3jWMjJ010-21540" value="&lt;h2&gt;&lt;b&gt;Candidates&lt;/b&gt;&lt;/h2&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="198.5" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="reRJ3kZ7E1X3jWMjJ010-21542" value="&lt;h2&gt;&lt;b&gt;Referrers&lt;/b&gt;&lt;/h2&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="649.75" y="350" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="reRJ3kZ7E1X3jWMjJ010-21543" value="&lt;h2&gt;&lt;b&gt;Employers&lt;/b&gt;&lt;/h2&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="689.75" y="270" width="60" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
