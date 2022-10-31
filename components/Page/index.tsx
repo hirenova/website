@@ -92,7 +92,7 @@ const Page: NextPage<PageProps> = ({
         navigation={navigation.filter(
           (item) =>
             !item.redirect?.pathname?.startsWith("/dashboard/") ||
-            item.redirect?.pathname === "/dashboard/profile"
+            (item.redirect?.pathname === "/dashboard/profile" && user)
         )}
         showLogin={showLogin}
         showSignUp={showSignUp}
