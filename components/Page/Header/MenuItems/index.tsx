@@ -28,7 +28,7 @@ const MenuItems = ({ className, navigation, ...props }: MenuItemsProps) => {
         <Item
           key={index}
           redirect={item.redirect}
-          highlight={item.redirect.pathname === router.pathname}
+          $highlight={item.redirect.pathname === router.pathname}
         >
           {item.children}
         </Item>

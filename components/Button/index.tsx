@@ -9,10 +9,11 @@ import { MouseEventHandler } from "react"
 import styled from "styled-components"
 
 const Wrapper = styled(ButtonChakra)`
-  :focus {
-    /* box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6) !important; */
-    /* box-shadow: none !important; */
-  }
+  justify-content: flex-start;
+  /* :focus { */
+  /* box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6) !important; */
+  /* box-shadow: none !important; */
+  /* } */
 `
 
 interface UrlObjectExtended extends UrlObject {

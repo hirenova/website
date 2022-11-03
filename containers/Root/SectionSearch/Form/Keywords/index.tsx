@@ -7,11 +7,7 @@ import {
 import { FaSearch } from "react-icons/fa"
 import styled from "styled-components"
 
-const Wrapper = styled(InputGroup)`
-  @media (min-width: 1000px) {
-    width: fit-content;
-  }
-`
+const Wrapper = styled(InputGroup)``
 
 interface KeywordsProps extends Pick<InputProps, "className" | "onChange"> {}
 

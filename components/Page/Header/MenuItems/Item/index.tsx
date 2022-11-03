@@ -7,8 +7,8 @@ const Wrapper = styled(ButtonNavigation)<ItemProps>`
   padding: 10px;
   transition: 0.2s;
 
-  ${({ highlight }) =>
-    highlight
+  ${({ $highlight }) =>
+    $highlight
       ? css`
           background: #9b268c !important;
           color: white;
@@ -17,7 +17,7 @@ const Wrapper = styled(ButtonNavigation)<ItemProps>`
 `
 
 interface ItemProps extends ButtonNavigationProps {
-  highlight?: boolean
+  $highlight?: boolean
 }
 
 const Item = ({ className, children, ...props }: ItemProps) => {

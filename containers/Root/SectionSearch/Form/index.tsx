@@ -1,19 +1,11 @@
-import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react"
-import { css } from "@emotion/react"
 import FormRaw from "components/Form"
+import InputLocations, { Location } from "components/InputLocations"
 import { useRouter } from "next/router"
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  MouseEventHandler,
-  useState,
-} from "react"
-import { FaMapMarkerAlt, FaSearch } from "react-icons/fa"
+import { ChangeEventHandler, FormEventHandler, useState } from "react"
 import styled from "styled-components"
-import { encodeURIAll, encodeURIComponents } from "utils"
+import { encodeURIAll } from "utils"
 
 import Keywords from "./Keywords"
-import Location from "./Location"
 import SubmitButton from "./SubmitButton"
 
 const Wrapper = styled(FormRaw)`
@@ -26,7 +18,7 @@ const Wrapper = styled(FormRaw)`
   box-shadow: 5px 5px 15px rgb(64 79 104 / 5%);
   @media (min-width: 1000px) {
     align-items: center;
-    max-width: fit-content;
+    width: 50%;
   }
   @media (max-width: 1000px) {
     flex-direction: column;
@@ -52,26 +44,29 @@ interface FormProps {
 
 const Form = ({ className }: FormProps) => {
   const [keywords, setKeywords] = useState<string>("")
-  const [location, setLocation] = useState<string>("")
+  const [locationIds, setLocationIds] = useState<string>("")
 
   const router = useRouter()
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    router.push(encodeURIAll("/jobs", { keywords, location }))
+    router.push(
+      encodeURIAll("/jobs", {
+        keywords,
+        locationIds,
+      })
+    )
   }
 
   const onKeywordsChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setKeywords(event.target.value)
   }
 
-  const onLocationChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setLocation(event.target.value)
-  }
-
   return (
     <Wrapper className={className} onSubmit={onSubmit}>
       <Keywords onChange={onKeywordsChange} />
-      <Location onChange={onLocationChange} />
+      <InputLocations
+        onChange={(locationIds) => setLocationIds(locationIds.join(","))}
+      />
       <SubmitButton />
     </Wrapper>
   )
